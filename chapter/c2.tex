@@ -1,12 +1,13 @@
-\chapter{时域积分方程基础}
+\chapter{循环神经网络加速技术基础}
 时域积分方程（TDIE）方法作为分析瞬态电磁波动现象最主要的数值算法之一，常用于求解均匀散射体和表面散射体的瞬态电磁散射问题。
 
-\section{时域积分方程的类型}
-
-\section{空间基函数与时间基函数}
+\section{循环神经网络及其变体}
 利用数值算法求解时域积分方程，首先需要选取适当的空间基函数与时间基函数对待求感应电流进行离散。
+\subsection{普通循环神经网络}
+\subsection{长短期记忆神经网络}
+\subsection{回声状态网络}
 
-\subsection{空间基函数}
+\section{模型压缩与加速算法}
 RWG 基函数是定义在三角形单元上的最具代表性的基函数。它的具体定义如下：
 \begin{equation}
 f_n(\bm{r})=
@@ -39,13 +40,20 @@ f(\bm{x}^{i};\bm{w})\cdot f(\bm{x}^{j};\bm{w}),\text{otherwise},
 时域积分方程时间步进算法的阻抗元素直接影响算法的后时稳定性，因此阻抗元素的计算是算法的关键之一，采用精度高效的方法计算时域阻抗元素是时域积分方程时间步进算法研究的重点之一。
 
 
-\subsection{时间基函数}
+\subsection{轻量化网络}
 
-\subsubsection{时域方法特有的展开函数}
+\subsection{模型稀疏化}
 
-\subsubsection{频域方法特有的展开函数}
+\subsection{数值量化}
 
-\section{入射波}
+\subsection{张量分解}
+
+\section{硬件加速平台介绍}
+
+\subsection{FPGA硬件加速技术}
+
+\subsection{开发工具}
+
 
 如图\ref{picb}和图\ref{picc}所示分别给出了参数$E_0=\hat{x}$，$a_n=-\hat{z}$，$f_0=250MHz$，$f_w=50MHz$，$t_w=4.2\sigma$时，调制高斯脉冲的时域与频域归一化波形图。
 

@@ -1,34 +1,39 @@
 
-\chapter{时域积分方程数值方法研究}
+\chapter{算法分析及系统架构设计：以回声状态网络为例}
 
-\section{时域积分方程时间步进算法的阻抗元素精确计算}
-时域积分方程时间步进算法的阻抗元素直接影响算法的后时稳定性，因此阻抗元素的计算是算法的关键之一，采用精度高效的方法计算时域阻抗元素是时域积分方程时间步进算法研究的重点之一。
+\section{基于投影的模型压缩算法}
+\subsection{高速回声状态网络结构}
+\subsection{本征正交分解与离散经验插值}
+介绍高速回声状态网络的生成，算法顺序介绍，or硬件需求倒推
+\subsection{压缩算法的评估与分析}
+从精度和复杂度方面分析。
 
-\subsection{时域积分方程时间步进算法产生的阻抗矩阵的特征}
-由于时域混合场积分方程是时域电场积分方程与时域磁场积分方程的线性组合，因此时域混合场积分方程时间步进算法的阻抗矩阵特征与时域电场积分方程时间步进算法的阻抗矩阵特征相同。时域阻抗元素的存储技术也是关键技术之一，采用合适的阻抗元素存储方式可以提高并行算法的计算效率。
+\section{系统整体架构设计}
+应用场景介绍引入软硬件功能划分。
+\subsection{前向传播及压缩流程}
+\subsection{软硬件功能划分}
+\subsection{系统整体架构}
 
-\subsection{数值算例与分析}
-由于时域混合场积分方程是时域电场积分方程与时域磁场积分方程的线性组合，因此时域混合场积分方程时间步进算法的阻抗矩阵特征与时域电场积分方程时间步进算法的阻抗矩阵特征相同。
+\section{面向算法的定制化硬件分析}
+\subsection{算法需求分析}
+1需要实现原始网络，高速网络两个网络结构。
+2压缩网络结构尺寸可调节。
+3模型压缩过程。
+\subsection{硬件模块划分与复用性分析}
+\subsection{激活函数分段近似}
+\subsection{计算资源与存储资源需求分析}
 
-\begin{algorithm}[H]
-    \KwData{this text}
-    \KwResult{how to write algorithm with \LaTeX2e}
-    initialization\;
-    \While{not at end of this document}{
-        read current\;
-        \eIf{understand}{
-            go to next section\;
-            current section becomes this one\;
-        }{
-            go back to the beginning of current section\;
-        }
-    }
-    \caption{How to wirte an algorithm.}
-\end{algorithm}
+\section{基于FPGA的加速器设计}
+\subsection{硬件加速器整体架构}
 
-由于时域混合场积分方程是时域电场积分方程与时域磁场积分方程的线性组合，因此时域混合场积分方程时间步进算法的阻抗矩阵特征与时域电场积分方程时间步进算法的阻抗矩阵特征相同。
+\subsection{存储架构设计}
 
-\section{时域积分方程时间步进算法矩阵方程的求解}
+\subsection{计算架构设计}
+
+\subsection{矩阵向量乘法模块}
+
+\subsection{激活函数模块}
+
+\subsection{IP核互联设计}
 
 \section{本章小结}
-本章首先研究了时域积分方程时间步进算法的阻抗元素精确计算技术，分别采用DUFFY变换法与卷积积分精度计算法计算时域阻抗元素，通过算例验证了计算方法的高精度。
