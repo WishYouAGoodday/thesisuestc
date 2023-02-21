@@ -92,8 +92,17 @@ Tucker分解\citing{}，Tensor-Train分解\citing{}，CP分解\citing{}，Block-
 
 \subsection{神经网络硬件加速平台研究现状}
 神经网络处理其主要分成三类：第一类是基于冯诺伊曼通用处理器，如CPU，GPU，DSP等，它们都遵循取指，译码和执行的工作流程，具备一定的通用性和可编程性。
-第二类是专用集成电路（Application-Specific Integrated Circuit，ASIC），针对应用场景和任务需求，进行硬件的高度专用化设计以高效的完成规定的操作。
+第二类是专用集成电路，针对应用场景和任务需求对硬件进行全面化定制，相比通用架构能获得更高的性能和能效。
+第三类是基于可重构器件实现的处理器，主要是现场可编程门阵列，其具有可编程，高性能，低功耗，可并行，
+低成本等优势，广泛应用于领域专用计算中，尤其是在通信和人工智能应用中。
 
+GPU(Graph Process Unit)以图像处理而闻名，在深度学习计算也十分高效。GPU拥有数千个并行计算单元（SIMD），非常适合矩阵的线性运算。自从2012年
+AlexNet\citing{}在ImageNet的比赛中取胜以来，GPU越来越演变成神经网络计算的通用平台。英伟达最新的Hopper架构\citing{}GPU集成了专门针对深度学习的TensorCore，
+可加速所有精度（FP64，TF32，FP32，FP16和INT8），提供1000TFlops的浮点算力。在软件服务上，CUDA和AI加速库cuDNN\citing{}提供了完善的开发环境和成熟的工具链。
+TensorFlow，Pytorch，Caffe，Theano和PaddlePaddle等深度神经网络框架也也都提供GPU加速服务，这使得用户可以基于GPU快速开发针对各种应用的
+神经网络模型，极大的解放了生产力。
+
+ASIC{Application-Specific Integrated Citcuit}是一种根据用户需求而专门设计，制造的集成电路，具备极高的专用性，同时成本低，功耗低，适合大批量产品的应用。
 
 \section{本文的主要研究内容}
 本论文以时域积分方程时间步进算法的数值实现技术、后时稳定性问题以及两层平面波加速算法为重点研究内容，主要创新点与贡献如下：
