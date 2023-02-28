@@ -156,9 +156,45 @@ GPU，ASIC，FPGA为神经网络的研究和实现提供了基础计算平台，
 当系统系统无法通过增大模尺寸降低误差即检测到异常输入时，系统需要采样异常状态并将其纳入投影空间。以上，系统具有学习能力，能够独立在边缘
 设备运行，并且可以生成任意大小的压缩模型以满足速度和精度的需求。
 
-（3）本文所提出的循环神经网络加速器硬件设计具有通用性，可以运行两种神经网络结构，以及不同的网络模型尺寸。
+（3）本文所提出的循环神经网络加速器硬件设计具有紧凑的计算结构和可配置的功能。计算单元基于矩阵分块的思想设计，通过分时复用可以实现任意维度
+网络模型的计算。针对循环神经网络中存在的大量相似结构，设计可高度复用的模块单元，对于微小的差异则通过改变数据路径予以保留。
+相比传统的神经网络加速器　的一种硬件实现对应唯一的网络结构和模型尺寸，本文所提出的硬件架构不仅可以改变网络模型结构，还能适应不同尺寸的模型，
+在专用领域内具有一定的通用性。
 
 \section{本论的结构安排}
 本文的章节结构安排如下：
 
-以上背景和现状介绍了神经网络在模型压缩和硬件实现方面的 
+以上背景和现状介绍了神经网络在模型压缩和硬件实现方面
+
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=1.0\columnwidth]{exp/fig_accuracy.eps}
+%	\caption{accuracy}
+%	\label{fig_accuracy}
+%\end{figure}
+
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=1.0\columnwidth]{exp/chart_accuracy1.eps}
+%	\caption{accura}
+%	\label{fig_acc}
+%\end{figure}
+
+
+
+
+%\input{exp/table_speed.tex}
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=1.0\columnwidth]{exp/fig_acc&speed.eps}
+%	\caption{accspeed}
+%	\label{fig_accu&speed}
+%\end{figure}
+
+
+
+%\input{exp/table_resourceUsed.tex}
+
