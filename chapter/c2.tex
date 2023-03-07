@@ -195,21 +195,22 @@ LSTM网络的数学模型为式\ref{eq:lstm}，该表达式详细说明了LSTM�
 %\subsection{数值量化}
 
 \subsection{张量分解}
-dd
+张量是神经网络的基本组成部分，其处理过程往往需要消耗大量的计算和存储资源，直接对张量进行压缩是一种有效减少网络模型参数量的方法。张量压缩
+是指将庞大参数量的张量分解成多个更小的张量，分解后的小张量能够通过一组运算还原为大的张量。张量分解过程是一个信息密集化的过程，其冗余
+数据会在分解的过程中被移除或用更简洁的方式被表达。低秩近似是一种常用的二维张量近似方式，其效果如图\ref{fig:lowrank}所示。对于一个秩为
+q的方阵\(W \in \mathbb{R}^{n \times n}\)，\(W\)可分解维两个矩阵相乘\(W = W_a * W_b\)，其中\(W_a\)的大小为\(n \times q\)，\(W_b\)的大小为\(q \times n\)。
+当\(q << n \)时，权值矩阵的空间复杂度从\(\mathcal{O}(n^2)\)降低到\(\mathcal{O}(2nq)\)。
 
-dd
+奇异值分解（singular value decomposition，SVD）经常用于低秩近似和模型降阶中，其可以从包含向量化数据的矩阵中提取最主要的特征。相比于特征值分解只能应用在满秩的
+方阵，SVD可以分解任意大小的矩阵，其数学表达为式\ref{eq:SVD}，其中\(A \in \mathbb{R}^{m \times n}\)为待分解矩阵，\( U \in \mathbb{R}^{m \times m}\)和\( V \in \mathbb{R}^{n \times n}\)
+是酉矩阵，分别由A的左奇异向量和右奇异向量张成。\(\Sigma \in \mathbb{R}^{m \times n}\)是对角矩阵，对角线上的元素是与特征向量相对应的特征值。一般情况下，
+特征值（\(\sigma_1, \sigma_2,...,\sigma_k\)），\(k=min(m,n)\)按数值大小排列，数值越大，表示该特征在还原矩阵时影响程度越大。模型降维的过程就是
+舍弃不重要的特征向量的过程，剩下的特征向量张成的空间即为降维后的空间。
+\begin{equation}\label{eq:SVD}
+	A = U* \Sigma * V^T
+\end{equation}
 
-dd
-
-
-dd
-
-dd
-
-dd
-
-dd
-
+本征正交分解（proper othogonal decompositon，POD）是另一种将数据从高维压缩到低维的方法，该方法可以分离数据的相关性，
 
 \begin{figure}
 	\centering
