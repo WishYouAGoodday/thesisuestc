@@ -200,6 +200,12 @@ LSTM网络的数学模型为式\ref{eq:lstm}，该表达式详细说明了LSTM�
 数据会在分解的过程中被移除或用更简洁的方式被表达。低秩近似是一种常用的二维张量近似方式，其效果如图\ref{fig:lowrank}所示。对于一个秩为
 q的方阵\(W \in \mathbb{R}^{n \times n}\)，\(W\)可分解维两个矩阵相乘\(W = W_a * W_b\)，其中\(W_a\)的大小为\(n \times q\)，\(W_b\)的大小为\(q \times n\)。
 当\(q << n \)时，权值矩阵的空间复杂度从\(\mathcal{O}(n^2)\)降低到\(\mathcal{O}(2nq)\)。
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\columnwidth]{low_rank.eps}
+	\caption{低秩分解}
+	\label{fig:lowrank}
+\end{figure}
 
 奇异值分解（singular value decomposition，SVD）经常用于低秩近似和模型降阶中，其可以从包含向量化数据的矩阵中提取最主要的特征。相比于特征值分解只能应用在满秩的
 方阵，SVD可以分解任意大小的矩阵，其数学表达为式\ref{eq:SVD}，其中\(A \in \mathbb{R}^{m \times n}\)为待分解矩阵，\( U \in \mathbb{R}^{m \times m}\)和\( V \in \mathbb{R}^{n \times n}\)
@@ -210,18 +216,47 @@ q的方阵\(W \in \mathbb{R}^{n \times n}\)，\(W\)可分解维两个矩阵相�
 	A = U* \Sigma * V^T
 \end{equation}
 
-本征正交分解（proper othogonal decompositon，POD）是另一种将数据从高维压缩到低维的方法，该方法可以分离数据的相关性，
-
-\begin{figure}
-	\centering
-	\includegraphics[width=0.8\columnwidth]{low_rank.eps}
-	\caption{低秩分解}
-	\label{fig:lowrank}
-\end{figure}
+本征正交分解（proper othogonal decompositon，POD）是另一种将数据从高维压缩到低维的方法，该方法将相关数据的特征进行分离，在其特征空间构造一组
+标准正交基并形成基空间，基空间的维度等于线性无关数据的数量。高维数据可以简单分解为的基向量的线性组合，而线性组合系数的数量往往远小于高维数据的数据个数，
+因此，高维数据可以用低维数据进行表示。式\ref{eq:POD}为线性分解的数学表达式，其中\(x_i\)为数据集中的第i个数据，\(\varphi _k\)是基空间中的第k个投影轴（基向量），
+\(a(k)\)是线性组合系数。高维数据\(x_i\)本征正交分解后可以用\((a_1,a_2,...,a_r)\)来近似表示。
+\begin{equation}\label{eq:POD}
+	\begin{split}
+		\mathbf{x_i} \approx \sum_{k=1}^{r}a(k)*\varphi _k		\\
+	\end{split}
+\end{equation}
+本征空间可以通过奇异值分解（SVD）获得，假设X是由m个数据构成的数据集
+\begin{equation}
+	X = [x_1,x_2,...,x_m]
+\end{equation}
+对其进行奇异值分解
+\begin{equation}
+	X = \Phi * \Sigma *V^T \approx \Phi _r * \Sigma _r * V_r^T
+\end{equation}
+式中\(\Phi\)是本征空间，\(V\)是投影矩阵，\(\Sigma\)是奇异值矩阵。由于奇异值分解后各个特征向量在原空间的还原过程中贡献程度不同，可以选择前r
+个向量作为数据特征空间的基向量。这将大大减小空间的维度，投影坐标的数据个数也将随之减少。高维数据和低维数据的关系如式\ref{eq:proj}，其中\(x\)是高维数据，
+\(V_r\)是投影矩阵，\(a\)是低维数据。
+\begin{equation}\label{eq:proj}
+	\mathbf{x} \approx V_r * \mathbf{a}
+\end{equation}
 
 \section{硬件加速平台介绍}
+在通用计算时代，软件算法和硬件设计是相互分离的，算法直接面向上层应用旨在解决复杂的应用问题和提升应用效果指标，硬件作为算法的最终实现平台，
+其设计目的在于高效快速的执行计算和访存操作。不同的设计目的和约束空间导致算法和硬件存在各自的特性，在实际应用过程中往往需要综合考虑软硬件特性和具体场景需求
+选择适合算法特性的计算平台或者根据硬件特性进行算法优化。人工智能领域中的神经网络算法不同于传统算法，其模型结构和运算机制不固定，训练和推理过程相互分离，
+面对多样化的需求，选择合适的硬件平台显得尤为重要。本文第一章介绍了现有的神经网络硬件计算平台及其优势和劣势，CPU和GPU由于完善的开发环境和实现框架，多用于
+神经网络原型设计和模型训练，ASIC适用于成熟算法的大规模应用，FPGA由于其可配置的特点广泛应用在专用架构设计以及神经网络的推理过程。
+本文针对边缘应用场景设计实现循环神经网络加速系统，系统受限于资源和功耗约束，需要满足对延迟和模型预测精度的弹性化需求，FPGA恰能满足上述要求。
+因此本文以FPGA作为硬件实现平台，设计循环神经网络前向传播算法的专用加速架构并最终实现独立且完整的加速系统。
 
 \subsection{FPGA硬件加速技术}
+
+FPGA是一种半定制化的硬件电路，内部包含可配置逻辑块（configurable Logic Block，CLB），I/O块（I/O Blocks）和互联通路（Routing Channels），
+通过更改CLB中的存储的逻辑值和使能不同的片上互联线，FPGA可以快速的实现不同的定制化硬件结构。此外，FPGA还会集成其他常用模块，例如DSP，BRAM，FF等，
+丰富的片上资源使得FPGA可以实现更多且更强大的功能。可重构特性和丰富的资源赋予FPGA“算法即芯片”的优势，研究人员可针对算法的特性，设计高效的硬件架构，从电路
+层面直接对算法进行优化，充分发挥每一个硬件结构的性能，最终实现特定算法最大程度的加速。同时，FPGA支持大规模的逻辑并行，因此该计算平台特别适合实现
+简单且大规模的计算任务，尤其是神经网络算法中的张量计算。并行度的提高使得提升硬件运行频率显得不再迫切，功耗也会因此大大降低，最终相较其他计算平台，
+FPGA可以实现更高的能效。
 
 \subsection{开发工具}
  
@@ -246,4 +281,5 @@ q的方阵\(W \in \mathbb{R}^{n \times n}\)，\(W\)可分解维两个矩阵相�
 \section{本章小结}
 本章首先从时域麦克斯韦方程组出发推导得到了时域电场、磁场以及混合场积分方程。
 
-
+FPGA是一种半定制化的硬件电路，内部包含可配置逻辑块（configurable Logic Block，CLB），I/O块（I/O Blocks）和互联通路（Routing Channels），
+通过更改CLB中的存储的逻辑值和使能不同的片上互联线，FPGA可以快速的实现不同的定制化硬件电
