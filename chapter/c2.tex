@@ -281,38 +281,37 @@ FPGA可以实现更高的能效。
 \end{itemize}
 \subsection{开发工具}
 本文采用Xilinx的FPGA板卡及其所提供的开发套件，包括Vivado，Vitis HLS和Vitis嵌入式软件平台。采用基于高级程序语言的HLS（High-Level Synthesis）编程
-模型，
+模型，相较传统的RTL描述如Verilog和VHDL，高层次硬件电路建模能降低开发难度，提升开发效率。经过数十年的发展，HLS已经在相当程度上可以媲美RTL级硬件开发，
+尤其是在人工智能领域，由于算法迭代周期短，各种模型结构层出不穷，传统的硬件实现方式已经难以适应敏捷开发的需求。在HLS编程模型下，硬件设计人员可以直接面向
+算法开发符合其计算特性的硬件架构，快速创建高性能硬件计算平台；软件开发人员可以专注于高层次的抽象工作，而不必关注底层硬件的实现细节。高层次综合工具
+将软件和硬件桥接在一起，大大所短了FPGA的开发周期。
 \begin{figure}
 	\centering
-	\includegraphics[width=0.8\columnwidth]{XilinxWorkflow.eps}
-	\caption{Xlinx FPGA开发流程}
-	\label{fig:xlinx}
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=1\columnwidth]{hls.png}
+		\caption{HLS流程图}
+		\label{fig:hls}
+	\end{minipage}
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\includegraphics[width=1\columnwidth]{HScodesign.png}
+		\caption{基于HLS的软硬件协同示意图}
+		\label{fig:hlscodesign}
+	\end{minipage}
 \end{figure}
 
-Lists are easy to create:
-\begin{itemize}
-  \item[1] List entries start with the \verb|\item| command.
-  \item[2] Individual entries are indicated with a black dot, a so-called bullet.
-  \item[3] The text in the entries may be of any length.
-\end{itemize}
-
-
-如图\ref{picb}和图\ref{picc}所示分别给出了参数$E_0=\hat{x}$，$a_n=-\hat{z}$，$f_0=250MHz$，$f_w=50MHz$，$t_w=4.2\sigma$时，调制高斯脉冲的时域与频域归一化波形图。
-
-\begin{figure}[h]
-\subfloat[]{
-	\label{picb}
-	\includegraphics[width=7.3cm]{picb.pdf}
-}
-\subfloat[]{
-	\label{picc}
-	\includegraphics[width=6.41cm]{picc.pdf}
-}
-\caption{调制高斯脉冲时域与频率波形，时域阻抗元素的存储技术也是时间步进算法并行化的关键技术之一。(a)调制高斯脉冲信号的时域波形；(b)调制高斯脉冲信号的频域波形}
-\label{fig1}
-\end{figure}
-
-时域阻抗元素的存储技术\citing{xiao2012yi}也是时间步进算法并行化的关键技术之一，采用合适的阻抗元素存储方式可以很大的提高并行时间步进算法的计算效率。
+HLS的开发流程如图\ref{fig:hls}所示。首先，开发人员需要分析算法的并行度，计算需求以及存储需求等算法特性进行定制化的专用硬件架构设计。需要注意的是，
+直接使用软件风格的算法描述作为电路的行为建模尽管能够综合出电路，但通常情况下是低效的。高层次硬件描述应当首先是一种硬件描述，只是抽象层级较高，以至于
+和软件描述存在较大的重叠，但是最终的效果却全然不同。描述的对象有输入输出接口，数据位宽，并行化描述，流水线等。在完成硬件架构的行为级建模后，需要进行
+行为仿真和综合。行为仿真是指通过对使用高级描述语言所描述的算法功能模块进行编译和验证，找出未覆盖的功能点并据此修正硬件模型。在算法模块功能完整的条件下，
+行为综合会将高层次的硬件描述转换为RTL描述，该过程具体可分为调度（scheduling）和绑定（Binding）两大步骤。编译器会根据算法的执行逻辑主动分析数据的并行性及相互
+依赖关系，将数据的微操作调度到指定的时间节点，此外，算法的时序控制逻辑也将被提取，如顺序，分支和循环将会以状态机的形式实现。在完成前叙所有流程后，绑定步骤将会
+算法的功能模块映射到具体的硬件资源，例如变量，数组，运算，函数将会分别映射为寄存器，BRAM存储器，DSP和协议接口。以上过程即为HLS的原理和实现过程，
+在生成RTL描述后，后续的步骤将和传统硬件开发流程相同，此处不再赘述。
 
 \section{本章小结}
-本章首先从时域麦克斯韦方程组出发推导得到了时域电场、磁场以及混合场积分方程。
+本章主要介绍了循环神经网络及其软硬件加速技术基础。首先介绍了几种广泛应用的循环神经网络模型，详细的分析了各个模型的网络结构，推理过程以及其优势劣势，总结出共性和特性，并说明了
+循环神经网络在实际应用过程中面临的挑战。接着，本章分别从软件和硬件的角度分别给出解决方案。软件方面主要采用模型压缩技术减轻算法对硬件的计算和存储压力，常用的方法如剪枝和张量分解，
+详细的压缩原理和过程被展示出来，其目的在于突显本文所使用的模型压缩算法的优势。对于本文算法也使用到的相同技术基础则做了详细的推导和说明。
+在硬件方面，针对本文所使用的硬件实现平台做了详细的介绍，包括FPGA常用的加速技术和高层次硬件描述与综合的原理和过程。
