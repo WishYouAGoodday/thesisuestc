@@ -249,14 +249,24 @@
 硬件架构进行实现。模型压缩任务可以更具体的划分为矩阵奇异值分解（SVD），离散经验插值（DEIM）和简化网络生成。尽管这些功能模块都是将矩阵
 作为基本操作对象，但是算法的复杂度高，并且从执行频次的角度，模型压缩的需求是存在的但却不会频繁地请求。因此，本文压缩过程的所有任务都将采用
 软件的方式实现。
-
-以上分析了软硬件实现方式的优势和劣势，并对系统功能进行了划分，综合考虑实现成本，硬件资源开销，系统目标及任务需求等方面因素，将系统各功能
-模块映射到合适的实现方式上，初步完成了循环神经网络前向传播与加速的系统设计，本文将在后续章节详细的介绍具体实现细节。
-
 \input{exp/table_hard&soft.tex}
 
-
+以上分析了软硬件实现方式的优势和劣势，并对系统功能进行了划分，综合考虑实现成本，硬件资源开销，系统目标及任务需求等方面因素，将系统各功能
+模块映射到合适的实现方式上，初步完成了循环神·经网络前向传播与加速的系统设计，本文将在后续章节详细的介绍具体实现细节。
 \subsection{系统整体架构}
+在完成系统功能模块和软硬件实现方式的划分后，系统的整体架构也就自然而然的浮现出来。图\ref{fig:sysArch}所示为本文系统的SoC实现架构。
+从实现方式的角度，该架构主要由三部分构成：软件部分，硬件部分以及软硬件接口界面。对应的，其硬件基础分别为：CPU，加速器和AXI总线。从硬件模块功能的
+角度，系统架构可以分为处理器模块（CPU和加速器），存储模块（片上存储和片外存储）以及互联模块。以上从不同的角度对系统进行解构，系统的全景图被清晰的展现出来，
+实际上系统需要有机的结合各个组成部分，以高效的实现系统功能。
+
+系统架构中的各个模块具有不同的特性，并分别承担符合其工作模式的一部分系统功能。其中CPU模块负责运行软件端代码，通过控制总线对硬件加速器进行配置和控制，
+通过数据总线向加速器载入参数和输入数据，并最终将硬件执行的结果返回到软件端。加速器部分主要完成系统划分给硬件实现的功能，包括循环神经网络的
+前向传播过程以及数据采样，加速器的设计采用冯诺伊曼的存算分离结构，其由控制单元，运算单元和存储单元组成。存储单元一方面是作为寄存器与片外存储
+数据交换的缓存，另一方面用于暂存计算单元产生的中间数据，其存在的意义是减少计算单元访问片外存储的频率，利用其高速的特性降低数据移动所带来的延迟。
+控制单元通过对计算单元和存储单元进行控制完成任务的具体功能，同时根据系统设计目标，本文的控制器需要具有可配置的特性，在接收CPU传输的配置信息后
+需要控制加速器实现不同的功能，包括切换网络结构和改变模型尺寸。 计算单元由矩阵-向量乘法（MVM）模块和激活函数模块构成，由于循环神经网络存在大量的乘加运算
+操作，这使得计算单元面临着较重的任务负载，并且耗时较长。通常情况下，计算单元和存储单元需要进行高速化设计，采用并行化和流水线化技术进行优化，
+这也是神经网络加速器加速能力的来源。
 \begin{figure}
 	\centering
 	\includegraphics[width=0.8\columnwidth]{exp/fig_systemArch2.eps}
@@ -264,22 +274,155 @@
 	\label{fig:sysArch}
 \end{figure}
 
+\section{压缩过程的软件实现}
+前一节系统的划分确定了软件端需要实现的功能，本小节将对这些功能逐一进行实现，包括功能的细化，软件架构的定义以及算法的开发。在功能方面，软件端总体上可
+划分为两大部分。其一是压缩过程的软件实现，该过程需要用到线性代数相关运算，特别是矩阵分解和线性方程求解。通常情况下，矩阵相关的任务可以
+采用硬件实现，但时考虑到工具的完整性和实现的成本及收益，本文对压缩过程的全部子过程均使用软件的方式实现。压缩过程首先需要从硬件加速器端的存储
+单元读取状态样本和激活函数样本，然后对样本集进行分解并选取样本空间的一部分特征子空间作为投影空间。为了进一步获得更简化的网络模型，采用离散经验
+插值的方法改变线性运算和非线性运算的顺序，使得矩阵乘法能够穿透激活函数进而与函数内部的常量矩阵相乘，获得更小的计算复杂度。最后，根据以上
+计算过程所获得的投影矩阵和选择矩阵，将原始网络的权重参数转化为简化网络的权重矩阵，并最终完成模型的压缩过程。为了便于软件实现，算法\ref{alg:Gen_ESN}
+展示了压缩过程的算法描述，算法\ref{alg:deim}是补充说明。DEIM算法被单独列出，一方面是因为其功能的独立性，另一方面是因为算法\ref{alg:Gen_ESN}描述
+的简洁与连贯。算法\ref{alg:Gen_ESN}总体上可以划分为两部分，分别是关键矩阵的生成和简化网络的生成。这两部分存在数据依赖关系，但是功能又相互独立。
+为了使功能界限更加明显，可以通过预存关键矩阵的方法实现这两部分的分离。
 
-\section{面向算法的定制化硬件分析}
+
+算法定义了软件程序的边界，抽象程度越高的算法往往实现系统层级的功能并和应用高度绑定，如算法\ref{alg:GenESN}实现了系统功能中压缩过程，抽象层级较低的算法往往具有通用的功能，
+如算法\ref{alg:deim}。算法描述的最底层应当是工具所能提供的不可分化的功能单元，如SVD，Solve等函数。Eigen是专为嵌入式软件设计的线性代数库，
+提供了压缩算法最基本的实现单元。本文软件实现正是基于此函数库从而构建模型压缩的功能，程序的层级也如算法的抽象层级一般，分层实现。
+
+\begin{algorithm}
+\setstretch{1.2}
+ \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+ \Input{samples\(\{x_1,x_2,...,x_{n_s}\}\) and \(\{h_1,h_2,...,h_{n_s}\}\), \\
+	    Pre- reduced order \(n_q\)}
+ \Output{Projection matrix $V_x,V_h$,Selsection Matrix $P_h$}
+\emph{$\triangleright$\ Obtian the state approximation matrix \(V_x\)}\;
+$ X \leftarrow [x_1,x_2,...,x_{n_s}]$	\;
+$ V_x,\Sigma_x,U_x \leftarrow SVD(X)$	\;
+$ V_x \leftarrow V_x[:,1:n_q]$	\;
+
+\emph{$\triangleright$\ Obtian the function approximation matrix \(P_h\) and \(P_h\)}\;
+$ H \leftarrow [h_1,h_2,...h_{n_s}] $	\;
+$ V_h,\Sigma_h,U_h \leftarrow SVD(H)$	\;
+$ V_h \leftarrow V_h[:,1:n_q]$	\;
+$ P_h  \leftarrow DEIM(V_h)$	\qquad \emph{$\triangleright$ DEIM process in Algorithm 2}\;
+
+ \caption{Generate Porjection matrix and Selection matrix}
+ \label{alg:Gen_PUV}
+\end{algorithm}
+\begin{algorithm}
+\setstretch{1.2}
+ \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+ \Input{$V_h \in \mathbb{R}^{n \times n_s}$ and Pre-reduced order \(n_q\)}
+ \Output{$P_h \in \mathbb{R}^{n \times q}$}
+$[u_1,u_2,...,u_q] \leftarrow V_h[:,1:n_q]$	\;
+$\rho$ = maxIndex$(|u_1|)$							\;
+$P = [e_{\rho}]$, \quad $U = [u_1]$			\;
+for $\ell = 2$ \ to \(n_q\) 							\;
+\qquad	Solve$(P^T U c) = P^T u_{\ell}$ \ for c	\;
+\qquad	$r = u_{\ell} -Uc$						\;
+\qquad	$\rho =$ \ maxIndex$(|r|)$						\;
+\qquad	$U \leftarrow [U,u_{\ell}], P \leftarrow [P,e_{\rho}]$		\;
+end for	
+ \caption{DEIM}
+ \label{alg:deim}
+\end{algorithm}
+
+
+\begin{algorithm}
+\setstretch{1.2}
+ \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+ \Input{key matrix $P_h,V_h,V_x \in \mathbb{R}^{n \times n_q}$,		\\
+	 	Original ESN matrices $W,W_{in},W_{out}$,	\\
+	 	reduced order q (q<\(n_q\)).}
+ \Output{ReducedESN weight matrices $\widehat{E}_d, \widehat{E}_l, \widehat{W}, \widehat{W}_{in}, \widehat{W}_{out}$}
+
+ $V_x \leftarrow V_x[:,1:q]$	\;
+ $V_h \leftarrow V_h[:,1:q]$	\;
+ $P_h \leftarrow p_h[:,1:q]$	\;
+ \emph{$\triangleright$\ Generate RedecedESN matrices	}	\;
+$\widehat{E}_d \leftarrow V_x^T V_h (P_h^T V_h)^{-1}$	\;
+$\widehat{E}_l \leftarrow V_x^T W V_x - \widehat{E}_d P_h^T W V_x$	\;
+$\widehat{W} \leftarrow P_hT W V_x$	\;
+$\widehat{W}_{in} \leftarrow P_h^T W_{in}$	\;
+$\widehat{W}_{out} \leftarrow W_{out}V_x$	\;
+
+ \caption{Generate ReducedESN from OriginalESN}
+ \label{alg:GenESN}
+\end{algorithm}
+软件实现的第二大功能是流程管理和硬件配置等控制类功能。该部分软件程序需要接收外部环境的输入信息，包括简化网络模型尺寸切换的指令，运行原始网络并进行采样
+的指令以及简化网络生成指令等。在接收到指令后，软件需要对系统的流程作出调整。例如当系统监测到模型的预测精度降低时，需要将简化网络的模型尺寸
+重新设定为较大的阶数，在完成模型压缩后需要进一步判断误差是否降低，以及是否需要运行原网络以进行精度补偿。系统对硬件的控制也在软件端实现，
+具体功能包括配置网络结构以完成原始网络和简化网络的切换，配置简化网络的模型尺寸以实现应用环境对系统精度和速度的要求，启动网络的前向传播并
+接收硬件加速器计算的结果。
+
+\section{面向算法的定制化硬件分析与设计}
 \subsection{算法需求分析}
+dd
+
+dd
+
+dd
+
+dd
 1需要实现原始网络，高速网络两个网络结构。
 2压缩网络结构尺寸可调节。
 3模型压缩过程。
-\subsection{硬件模块划分与复用性分析}
+
+\subsection{硬件加速器整体架构}
+硬件模块划分与复用性分析
+\begin{figure}
+	\centering
+	\includegraphics[width=1\columnwidth]{exp/fig_accArch.eps}
+	\caption{加速器整体架构图}
+	\label{fig:accArch}
+\end{figure}
+\subsection{计算架构设计}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\columnwidth]{exp/fig_compute.eps}
+	\caption{计算架构图}
+	\label{fig:compute}
+\end{figure}
+\subsection{存储架构设计}
+\begin{figure}
+	\centering
+	\includegraphics[width=1\columnwidth]{exp/fig_memory.eps}
+	\caption{存储架构图}
+	\label{fig:memory}
+\end{figure}
+
+
 \subsection{激活函数分段近似}
+\begin{figure}
+	\centering
+	\begin{minipage}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[width=1\columnwidth]{exp/fig_stateHist.eps}
+		\caption{状态频率分布直方图}
+		\label{fig:stateHist}
+	\end{minipage}
+	\begin{minipage}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[width=1\columnwidth]{exp/fig_funcHist.eps}
+		\caption{激活函数频率分布直方图}
+		\label{fig:pfuncHist}
+	\end{minipage}
+\end{figure}
+
+\input{exp/table_activation.tex}
+
+\begin{figure}[htbp]
+	\centering
+		\subfloat[]{\includegraphics[width=0.45\linewidth]{exp/fig_activation.eps}}
+		\subfloat[]{\includegraphics[width=0.45\linewidth]{exp/fig_activation_zoom.eps}}
+	\label{fig:activationErr}
+	\caption{激活函数不同近似方法的精度图，图b是精度图的局部放大}
+\end{figure}
 \subsection{计算资源与存储资源需求分析}
 
-\section{基于FPGA的加速器设计}
-\subsection{硬件加速器整体架构}
-
-\subsection{存储架构设计}
-
-\subsection{计算架构设计}
+\section{硬件加速器的实现}
+\subsection{控制单元设计}
 
 \subsection{矩阵向量乘法模块}
 
