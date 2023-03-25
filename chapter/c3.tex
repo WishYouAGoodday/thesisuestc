@@ -18,9 +18,9 @@
 \(n_{in}\)为输入数量，\(n_{out}\)为输出数量。
 \begin{equation}\label{eq:redesn}
 	\begin{split}
-		\widehat{z}_t &= f(\widehat{W} * \widehat{x}_{t-1} + \widehat{W}_{in} * u_{t})				\\	
-		\widehat{x}_t &= \widehat{E}_l * \widehat{x}_{t-1} + \widehat{E}_d * \widehat{z}_{t} 		\\
-		y_{t} 			&= \widehat{W}_{out} * \widehat{x}_{t}	
+		\widehat{z}_t &= f(\widehat{W}  \widehat{x}_{t-1} + \widehat{W}_{in}  u_{t})				\\	
+		\widehat{x}_t &= \widehat{E}_l  \widehat{x}_{t-1} + \widehat{E}_d  \widehat{z}_{t} 		\\
+		y_{t} 			&= \widehat{W}_{out}  \widehat{x}_{t}	
 	\end{split}
 \end{equation}
 
@@ -54,11 +54,11 @@
 相应的，网络中神经元的连接复杂度也将降低，权重矩阵的参数量将从\(n^2\)变为\(q^2\)。以上神经元数量和权重参数量的压缩将会直观的反映到模型的
 计算复杂度上，原网络每个时间步长的前向传播计算复杂度为
 \begin{equation}
-	\mathcal{O}(n^2 + n*n_{in} + n*n_{out})
+	\mathcal{O}(n^2 + n n_{in} + n n_{out})
 \end{equation}
 简化网络的前向传播计算复杂度为
 \begin{equation}
-	\mathcal{O}(q^2 + q*n_{in} + q*n_{out})
+	\mathcal{O}(q^2 + q n_{in} + q n_{out})
 	\label{eq:computeComplexity}
 \end{equation}
 在输入输出数量不变的条件下，简化网络的时间复杂度仅由\(q\)决定，和原网络的阶数\(n\)无关。又因为\(q<<n\)，所以简化网络前向传播的速度会比原网络快很多。
@@ -76,7 +76,7 @@
 \begin{equation}
 	V_x * \widehat{x}_{t} \approx x_{t}
 \end{equation}
-其中\(V_x \in \mathbb{R}^{n \times q}\)是状态投影矩阵,满足\(V_x^T * V_x = I\)，\(x_{t} \in \mathbb{R}^n\)是状态向量，\(\widehat{x}_t \in \mathbb{R}^q\)是状态近似向量。
+其中\(V_x \in \mathbb{R}^{n \times q}\)是状态投影矩阵,满足\(V_x^T  V_x = I\)，\(x_{t} \in \mathbb{R}^n\)是状态向量，\(\widehat{x}_t \in \mathbb{R}^q\)是状态近似向量。
 状态近似将高维向量\(x_t\)投影到状态空间中，并用状态空间的基向量进行线性表示，其坐标为\(\widehat{x}\)。实际上，由于输出只需要选择性的保留
 动态系统过去序列的某些方面信息，而与其他方面无关，系统的动态特征往往有限且集中。这在状态空间上表现为：和任务输入输出相关的状态只占全部状态的一部分，即
 有效状态空间是满状态空间的子空间。按照状态子空间中特征的重要程度划分，有效状态空间又可以分为核心特性空间和外围特征空间。在进行状态投影时，状态向量将首先
@@ -85,18 +85,18 @@
 将状态近似代入回声状态网络模型\ref{eq:esn}得到
 \begin{equation}
 	\begin{split}
-		\widehat{x}_{t} & = V_x^T * f(W*V_x * \widehat{x}_{t-1} + W_{in} * u_t)	\\
-					y_t & = W_{out} *V_x * \widehat{x}_t
+		\widehat{x}_{t} & = V_x^T  f(W V_x  \widehat{x}_{t-1} + W_{in}  u_t)	\\
+					y_t & = W_{out} V_x  \widehat{x}_t
 	\end{split}
 \end{equation}
 基于投影的状态近似方法生成的简化网络除了隐藏层神经元数量更少以外，还在自循环结构上增加了线性算子。该算子需要在状态激活后
 作用于每一个隐藏层神经元，并且运算次数为\(n\)，这导致隐藏层的等效神经元数量也为\(n\)。为了获取真正的模型简化，一个直观的想法是将\(V_x^T\)
-移动到激活函数内部，形成类似\(V_x^T * W * V_x\)的\(q \times q\)矩阵，这样模型压缩后等效神经元的数量也为\(q\)，简化网络前向传播的时间复杂度
+移动到激活函数内部，形成类似\(V_x^T  W  V_x\)的\(q \times q\)矩阵，这样模型压缩后等效神经元的数量也为\(q\)，简化网络前向传播的时间复杂度
 也将进一步降低。然而循环神经网络的激活函数通常是非线性的，非线性算子和线性算子的执行顺序是不能更改的，因此此想法无法直接实现。
 
 如果存在矩阵\(P \in \mathbb{R}^{n \times q}\) 能够和非线性运算交换顺序，即矩阵能够穿透激活函数，使得
 \begin{equation}
-	P^T*f(W*V_x *\widehat{x}_t + W_{in} *u_t) = f(P^T*W*V_x*\widehat{x}_t + P^T *W_{in}* u_t)	
+	P^T f(W V_x  \widehat{x}_t + W_{in} u_t) = f(P^T W V_x \widehat{x}_t + P^T W_{in} u_t)	
 \end{equation}
 那么将会实现回声状态网络真正的简化，其模型大小就完全不受原网络尺寸的影响。如何构造这样一个理想的矩阵，数学上早已给出了充分的研究和证明。
 当\(P = [e_1,e_2,...,e_q]\) (\(e \in \mathbb{R}^n\)是只含一个1且其余元素为0的向量)，线性运算和非线性运算可以交换顺序。其原理在于矩阵P的
@@ -109,15 +109,15 @@
 使用投影近似会带来系统不稳定的问题，系统稳定性分析请见文献[21]。因此为了得到渐进稳定的简化网络，激活函数将被分为线性部分和非线性部分，
 投影近似仅作用于非线性部分。网络隐藏层非线性部分可以表示为
 \begin{equation}\label{eq:h(x)}
-	h(x_t) = f(W*x_t + W_{in}*u_t) - W*x_t
+	h(x_t) = f(W x_t + W_{in} u_t) - W x_t
 \end{equation}
 结合激活函数近似框架
 \begin{equation}
-	V_h*\widehat{h}(x) \approx h(x)
+	V_h \widehat{h}(x) \approx h(x)
 \end{equation}
 式中\(V_h \in \mathbb{R}^{n \times q}\)是函数投影矩阵，将选择矩阵P作用于该投影近似框架，得到
 \begin{equation}\label{eq:Pselect}
-	P_h^T*V_h*\widehat{h}(x) = P_h^T*h(x)
+	P_h^T V_h \widehat{h}(x) = P_h^T h(x)
 \end{equation}
 最后，综合以上理论公式，将得到简化网络的最终形式
 \begin{equation}\label{eq:esn_red}
@@ -362,33 +362,52 @@ $\widehat{W}_{out} \leftarrow W_{out}V_x$	\;
 具体功能包括配置网络结构以完成原始网络和简化网络的切换，配置简化网络的模型尺寸以实现应用环境对系统精度和速度的要求，启动网络的前向传播并
 接收硬件加速器计算的结果。
 
-\section{前向传播过程的定制化硬件分析与设计}
-\subsection{算法需求分析}
-循环神经网络的前向传播过程是系统需要实现的最主要功能，该过程需要根据输入序列预测动态系统的行为。
+\section{前向传播过程的硬件分析与设计}
+\subsection{前向传播过程分析}
+循环神经网络的前向传播过程是系统需要实现的最主要功能，该过程需要根据输入序列预测动态系统的行为。系统的预测能力一方面体现为预测精度，另一方面
+表现为预测速度。相比于传统的单方面追求速度或资源消耗的神经网络硬件实现，本文的设计还需要考虑预测精度的因素。由于系统的预测精度和速度是一组
+难以调和的矛盾，不可同时兼得，所以本文在神经网络加速器的设计上赋予了系统精度和速度灵活的可调节空间，具体的预测能力需求则交由用户和环境决定。
+为了实现预测精度和速度可调这一系统功能，本文的神经神经网络加速器需要具备以下能力：
 
-1需要实现原始网络，高速网络两个网络结构。
-2压缩网络结构尺寸可调节。
-3模型压缩过程。
+1.本文的神经网络加速器需要拥有调节网络模型尺寸的能力。当加速器运行小尺寸网络时，系统将获得高预测速度；当加速器运行大尺寸网络时，系统将获得高预测精度。
 
-\subsection{硬件加速器整体架构}
-硬件模块划分与复用性分析
+2.为了能准确的生成不同尺寸的网络模型参数，本文的神经网络加速器拥有采样数据的能力。采样数据是指采样原始网络前向传播过程中的状态数据和激活函数数据。
+
+3.为了配合数据采样功能，本文的神经网络加速器需要具备切换不同网络模型的能力。当加速器需要调节简化网络的模型尺寸时，其需要先切换到原始网络模型
+并运行一段时间，以采用足够的数据供压缩算法使用。 
+
+%1需要实现原始网络，高速网络两个网络结构。
+%2压缩网络结构尺寸可调节。
+%3模型压缩过程。
+\subsection{加速器整体架构}
+前一小节从算法需求的角度为加速器提供了设计目标，本小节结合算法特性和硬件约束将设计目标转化为定制化专用硬件架构。循环神经网络前向传播算法的
+基本运算单元包括矩阵向量乘法和非线性激活函数，通过组合这些基本单元，网络拥有了复杂的分层结构。在硬件实现层面，基本结构的不同组合方式呈现
+出不同的资源，速度和功耗等硬件特性，即代表着不同的加速器架构。两种比较极端的设计方案分别是网络折叠为基本结构和网络全部展开，这两种
+方案代表着极致的节约资源和追求速度。在普通应用场景中通常需要在综合考虑两种方案的优势，对于资源消耗大的硬件单元则应该尽量采取折叠的设计方案，
+而对于决定系统速度的关键部分则应该使用展开的设计方案。在硬件资源的约束和网络推理速度的要求下，本文的加速器采用了结构级模块并行和
+分时复用的设计方案，既降低加速器辅助功能的资源开销，又能实现网络前向传播的加速。
+
+
+
+介绍图，模块的划分，复用性体现在哪里，加速体现在哪里
+%硬件模块划分与复用性分析
 \begin{figure}
 	\centering
-	\includegraphics[width=1\columnwidth]{exp/fig_accArch.eps}
+	\includegraphics[width=0.9\columnwidth]{exp/fig_accArch.eps}
 	\caption{加速器整体架构图}
 	\label{fig:accArch}
 \end{figure}
 \subsection{计算架构设计}
 \begin{figure}
 	\centering
-	\includegraphics[width=0.8\columnwidth]{exp/fig_compute.eps}
+	\includegraphics[width=0.7\columnwidth]{exp/fig_compute.eps}
 	\caption{计算架构图}
 	\label{fig:compute}
 \end{figure}
 \subsection{存储架构设计}
 \begin{figure}
 	\centering
-	\includegraphics[width=1\columnwidth]{exp/fig_memory.eps}
+	\includegraphics[width=0.8\columnwidth]{exp/fig_memory.eps}
 	\caption{存储架构图}
 	\label{fig:memory}
 \end{figure}
