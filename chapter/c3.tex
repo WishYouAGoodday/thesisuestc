@@ -487,43 +487,48 @@ $$c_{i}= a_{i1} b_{1} + a_{i2} b_{2} +\cdots+ a_{in}b_{n} = \sum_{k=1}^n a_{ik}b
 	\end{pmatrix}
 \end{equation}
 $$	\mathbf{c}_{i}= \mathbf{A}_{i1} \mathbf{b}_{1} + \mathbf{A}_{i2} \mathbf{b}_{2} = \sum_{k=1}^2 \mathbf{A}_{ik}\mathbf{b}_{k}	$$
+矩阵A被分为多个更小的矩阵块，并以矩阵块的形式进行运算。无论矩阵的维度多么庞大，都可将其转化为基本块矩阵向量运算，通过重复的调用该基本单元
+，最终可以实现任意维度的矩阵向量乘法。
 
-介绍分块矩阵乘法，外部可配置，内部可并行
+图~\ref{fig:compute} 所示为分块矩阵向量乘法的示意图，图中分块矩阵的大小为\(3 \times 3\)，原始矩阵的大小是\(9 \times 9\)，因此完成整个矩阵向量乘法
+一共需要调用9次分块运算，生成结果向量的单个元素则需要进行3次调用。分块矩阵进行计算时，由于各元素的计算不存在数据依赖，因此可以使用并行
+计算的方式，图中将分块矩阵的每一行视为一个独立处理单元（PE），在处理单元的内部还可以使用树形结构以实现进一步的并行。分块矩阵乘法通过
+分时复用和内部并行的方式不仅可以计算任意维度的矩阵向量乘法，还能达到加速运算的目的，是满足本文切换网络尺寸需求的一种计算模式。
+
+%介绍分块矩阵乘法，外部可配置，内部可并行
 
 
-计算架构的设计目的
+%计算架构的设计目的
 
-怎么设计：方案1，方案2
+%怎么设计：方案1，方案2
 
-设计结果：
+%设计结果：
 
-%\begin{figure}
-%	\centering
-%	\includegraphics[width=0.7\columnwidth]{exp/fig_compute.eps}
-%	\caption{计算架构图}
-%	\label{fig:compute}
-%\end{figure}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\columnwidth]{exp/fig_compute.eps}
+	\caption{计算架构图}
+	\label{fig:compute}
+\end{figure}
 
 
 \subsection{存储架构设计}
-%\begin{figure}
-%	\centering
-%	\includegraphics[width=0.8\columnwidth]{exp/fig_memory.eps}
-%	\caption{存储架构图}
-%	\label{fig:memory}
-%\end{figure}
+为了解决存储速度和成本的矛盾，并配合计算架构高效的完成计算任务，本文设计了三级存储系统，如图~\ref{fig:memory}所示。其中DRAM的存储容量最大，
+但是由于其位于片外，远离计算结构，因此存在较大的访存延迟。BRAM是片上同步存储单元，拥有较快的数据移动速度，但是容量较小。寄存器（Register）位于
+计算结构的内部，是使用LUT搭建的异步存储单元，响应速度快，能够配合运算器完成运算任务。
 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.7\columnwidth]{exp/fig_memory.eps}
+	\caption{存储架构图}
+	\label{fig:memory}
+\end{figure}
 
+根据存储系统的特性，本文为不同存储结构分配了相应的任务。DRAM用于存储网络模型的权重参数以及必要的压缩信息，这些数据的数量庞大，并且部分数据使用频率
+较低。BRAM用于缓存计算结构和DRAM之间交换的数据，在前向传播过程中，一方面其接收来自DRAM中的分块矩阵和向量，另一方面其暂存计算结构的结果，当完成全部数据的计算后，
+一次性的将数据迁移到下级存储DRAM中，中间层存储BRAM有效的降低了片上和片外数据的交换次数。寄存器是计算结构的组成部分，用于暂存输入，输出和中间计算结果。
+数据在经过三级存储系统的传输和缓存后，最终实现了高效的数据处理。
 \subsection{激活函数分段近似}
-%\begin{figure}
-%	\centering
-%	\begin{minipage}[t]{0.8\textwidth}
-%		\centering
-%		\includegraphics[width=1\columnwidth]{exp/fig_stateHist.eps}
-%		\caption{状态频率分布直方图}
-%		\label{fig:stateHist}
-%	\end{minipage}
-%\end{figure}
 
 激活函数用于控制神经元之间信息流通的比例，是网络结构中最重要的组成部分。但是硬件电路仅提供基本的数字逻辑，无法直接实现非线性激活函数。
 传统上激活函数硬件实现的方法包括查找表法，坐标旋转法，分段近似方法等，不同的方法有不同的实现成本，资源消耗，精度损失和计算延迟，在实际应用过程往往
@@ -569,14 +574,66 @@ H(x) = x(x(ax+b)+c) + d
 \end{equation}
 式中\(ax+b\)即为近似方法通用的基本硬件单元。
 \input{exp/table_activation.tex}
-
+\vspace{-4em}
 \section{硬件加速器的实现}
-\subsection{控制单元设计}
+%\subsection{控制单元设计}
 
 \subsection{矩阵向量乘法模块}
+矩阵向量乘法的基本处理单元是PE，其完成的功能是对两个相同维度的向量进行内积操作，通过堆叠PE形成计算单元（CU）可以实现小规模
+的矩阵向量乘法，即本文中的分块矩阵向量乘法。PE的基本结构如图~\ref{fig:MVM} 所示，其中图（a）展示了向量乘法的循环累积实现形式，该实现方式消耗的
+计算资源仅为一个乘法器和一个加法器。对于n维向量的乘法，需要执行n次乘法和n-1次加法操作，时间为\(\mathcal{O}(2n-1)\)。图（b）展示了向量乘法的树形实现方式，
+该实现方式通过乘法加法并行，时间复杂度降低为\(\mathcal{O}(log(n))\)。树形结构的大小取决于运算资源的数量以及任务的实际需求，在本文的设计中
+PE的维度是10，更大的并行度会带来更大的加速能力，但也可能导致更多的性能浪费，尤其是当矩阵向量的维度低于PE的维度时，这会导致部分乘法器和加法器
+处于空转的状态。为了解决这一问题，本文采用了较低的PE维度，但在CU层面使用了更多并行的PE单元并形成阵列，这种紧凑的计算结构使得计算
+资源被充分利用，效率更高。图~\ref{fig:MVM_long}所示为高维PE和低维PE并行结构的示意图，其中颜色越深，表示单位时间内的利用率越高，明显的，
+紧凑的低维PE结构拥有更高的利用率。
+\begin{figure}[htbp]
+	\centering
+		\subfloat[]{\includegraphics[width=0.37\linewidth]{exp/fig_MVM_element.eps}}	\\
+		\subfloat[]{\includegraphics[width=0.35\linewidth]{exp/fig_MVM.eps}}	
+	\caption{（a）向量乘法的循环累积方式，（b）向量乘法的树形累积形式}
+\label{fig:MVM}
+\end{figure}
+\begin{figure}[htbp]
+	\centering
+		\subfloat[]{\includegraphics[width=0.37\linewidth]{exp/fig_MVM_long.eps}}	\\
+		\subfloat[]{\includegraphics[width=0.20\linewidth]{exp/fig_MVM_short.eps}}	
+	\caption{（a）高维PE计算单元，（b）多个低维PE计算单元组成CU结构}
+\label{fig:MVM_long}
+\end{figure}
+
 
 \subsection{激活函数模块}
-
+本文使用分段三次函数近似的方法实现激活函数，其硬件结构如图~\ref{fig:tanh} 所示。首先输入会经过输入预处理单元，该硬件单元会将输入转化为分段区间地址用以索引近似函数的相关系数，
+其中具体包括绝对值运算和地址偏移运算。然后输入的绝对值\(|x|\)和三次函数的系数(\(a,b,c,d\))将会被送到非线性函数运算单元，在经过三个时钟周期的乘加运算后，该单元会输出近似的激活函数值。
+最后，输出单元将输入的符号位添加到激活函数的输出值上作为激活函数的最终输出。以上详细说明了激活函数模块数据处理的流程，其大致可以划分为分段和计算两大步骤。实际上，该流程也适用于
+其他分段近似激活函数的硬件实现，仅需要调整非线性函数运算单元的计算周期就能实现不同次数多项式的近似。
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=1\columnwidth]{exp/fig_activation_hard.eps}
+	\caption{激活函数硬件结构图}
+	\label{fig:tanh}
+\end{figure}
 \subsection{IP核互联设计}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=1\columnwidth]{exp/fig_blockDesign.eps}
+	\caption{IP核互连示意图}
+	\label{fig:blockDesign}
+\end{figure}
+图~\ref{fig:blockDesign}展示了系统主要IP模块及其互联，其中包括ESN加速器模块，Mciroblaze软核模块，片外存储DDR模块，以及Uart通信模块。
+系统中的各模块通过AXI总线相互连接，实现数据的交换以及任务的分工协作。ESN加速器模块负责实现系统最主要的功能---网络的前向传播，该功能的实现
+需要依赖系统其他IP模块的配合，具体流程如下：首先，软件端通过Microblaze核配置加速器的各参数地址信息，并传输启动匀运行的命令。然后，加速器通过其内部的DMA
+模块将数据从指定的地址搬运到片上存储单元，计算单元在获取这些数据后将会执行网络的前向传播计算功能。最后在完成计算后，加速器会将结果返回到软件端。
+其他的功能如模型压缩等，也是在软件端的控制下，将功能映射到具体的硬件模块进行执行。
+
 
 \section{本章小结}
+本章围绕循环神经网络加速技术的具体实现，详细地分析并讨论了包括算法，软件，硬件以及系统集成等方面的技术空间。首先，在章节的开始部分，本章
+详细的分析了简化循环神经网络的结构特性，然后就如何获得这样这样一个简化网络模型展开了详细的介绍，给出了网络压缩算法的具体推导过程，包括状态近似和
+激活函数近似。然后通过分析压缩算法的特性发现其具有压缩成本低，无需数据集，精度损失小等优势。结合实际应用需求与算力支撑，压缩算法和网络的前向传播
+可以组成独立完整的系统，该系统能够满足用户和环境对速度和精度的弹性需求，具有很大的应用价值和广阔的前景。因此，系统的设计与实现是本章后续讨论的重点，
+并且也是本文的主要任务。在分析系统的运行流程并进行合理的软硬件功能划分后，本章提出了系统整体架构。在软件实现方面，本章给出了软件主要功能的算法；
+在硬件实现方面，本章详细分析了网络前向传播算法的加速空间，并提出了满足系统需求的硬件加速器结构。最后本章详细的介绍了加速器的具体实现过程，
+包括架构层面的设计：计算架构设计和存储架构设计，也包括硬件模块的具体实现：矩阵向量乘法模型和激活函数模块。在完成以上具体功能部件的设计后，
+本章基于FPGA搭建了系统。
