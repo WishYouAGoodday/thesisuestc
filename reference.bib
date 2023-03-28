@@ -60,32 +60,29 @@
 }
 
 @article{MobileNetsV1,
-  author    = {Andrew G. Howard and
-               Menglong Zhu and
-               Bo Chen and
-               Dmitry Kalenichenko and
-               Weijun Wang and
-               Tobias Weyand and
-               Marco Andreetto and
-               Hartwig Adam},
-  title     = {MobileNets: Efficient Convolutional Neural Networks for Mobile Vision
-               Applications},
+  author    = {Andrew G. Howard, Menglong Zhu, Bo Chen, Dmitry Kalenichenko and Weijun Wang},
+  title     = {MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications},
   journal   = {CoRR},
   volume    = {abs/1704.04861},
-  year      = {2017},
+  year      = {2017}
 }
 
 @conference{MobileNetsV2,
-	author = {M. Sandler and A. Howard and M. Zhu and A. Zhmoginov and L. Chen},
-	booktitle = {2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-	title = {MobileNetV2: Inverted Residuals and Linear Bottlenecks},
-	year = {2018},
-	volume = {},
-	issn = {},
-	pages = {4510-4520},
-	doi = {10.1109/CVPR.2018.00474},
-	publisher = {IEEE Computer Society},
-	month = {6}
+  author    = {Mark Sandler, Andrew G. Howard, Menglong Zhu and Andrey Zhmoginov and Liang Chieh Chen},
+  title     = {MobileNetV2: Inverted Residuals and Linear Bottlenecks},
+  booktitle = {2018 {IEEE} Conference on Computer Vision and Pattern Recognition,
+               {CVPR} 2018, Salt Lake City, UT, USA, June 18-22, 2018},
+  pages     = {4510--4520},
+  publisher = {Computer Vision Foundation / {IEEE} Computer Society},
+  year      = {2018},
+  url       = {http://openaccess.thecvf.com/content\_cvpr\_2018/html/Sandler\_MobileNetV2\_Inverted\_Residuals\_CVPR\_2018\_paper.html},
+  doi       = {10.1109/CVPR.2018.00474},
+}
+@misc{squeezenet,
+	title={SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and \ensuremath{<}0.5{MB} model size},
+	author={Forrest N. Iandola and Song Han and Matthew W. Moskewicz and Khalid Ashraf and William J. Dally and Kurt Keutzer},
+	year={2017},
+	url={https://openreview.net/forum?id=S1xh5sYgx}
 }
 
 @conference{Shuffnet,
@@ -109,7 +106,37 @@
 	location = {Lille, France},
 }
 
-
+@article{slstm,
+	title={Sentence-State LSTM for Text Representation},
+	author={Zhang, Yue and Liu, Qi and Song, Linfeng},
+	booktitle={Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (ACL)}, year={2018}
+}
+@article{mgu,
+	title = {Minimal Gated Unit for Recurrent Neural Networks},
+	journal = {International Journal of Automation and Computing},
+	volume = {13},
+	number = {gjzdhyjszz-13-03-226},
+	pages = {226},
+	year = {2016},
+	issn = {2731-538X},
+	doi = {10.1007/s11633-016-1006-2},
+	url = {https://www.mi-research.net/en/article/doi/10.1007/s11633-016-1006-2},
+	author = {Guo-Bing Zhou,Jianxin Wu,Chen-Lin Zhang,Zhi-Hua Zhou}
+}
+@inproceedings{pruning_filters,
+	title={Pruning Filters for Efficient ConvNets},
+	author={Hao Li, Asim Kadav, Igor Durdanovic, Hanan Samet, Hans Peter Graf},
+	booktitle={International Conference on Learning Representations},
+	year={2017},
+	url={https://openreview.net/forum?id=rJqFGTslg}
+}
+@InProceedings{purning_channel,
+	author = {He, Yihui and Zhang, Xiangyu and Sun, Jian},
+	title = {Channel Pruning for Accelerating Very Deep Neural Networks},
+	booktitle = {Proceedings of the IEEE International Conference on Computer Vision (ICCV)},
+	month = {Oct},
+	year = {2017}
+}
 @inproceedings{WeightPurning,
  author = {Han, Song and Pool, Jeff and Tran, John and Dally, William},
  booktitle = {Advances in Neural Information Processing Systems},
@@ -204,6 +231,82 @@
 	pages = {815–832},
 	location = {Munich, Germany}
 }
+@InProceedings{LQ-nets,
+	author = {Zhang, Dongqing and Yang, Jiaolong and Ye, Dongqiangzi and Hua, Gang},
+	title = {LQ-Nets: Learned Quantization for Highly Accurate and Compact Deep Neural Networks},
+	booktitle = {Proceedings of the European Conference on Computer Vision (ECCV)},
+	month = {September},
+	year = {2018}
+}
+@article{DoReFa,
+  author    = {Shuchang Zhou and
+               Zekun Ni and
+               Xinyu Zhou and
+               He Wen and
+               Yuxin Wu and
+               Yuheng Zou},
+  title     = {DoReFa-Net: Training Low Bitwidth Convolutional Neural Networks with
+               Low Bitwidth Gradients},
+  journal   = {CoRR},
+  volume    = {abs/1606.06160},
+  year      = {2016},
+  url       = {http://arxiv.org/abs/1606.06160},
+  eprinttype = {arXiv},
+  eprint    = {1606.06160}
+}
+@inproceedings{ABC-net,
+	 author = {Lin, Xiaofan and Zhao, Cong and Pan, Wei},
+	 booktitle = {Advances in Neural Information Processing Systems},
+	 editor = {I. Guyon and U. Von Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett},
+	 pages = {},
+	 publisher = {Curran Associates, Inc.},
+	 title = {Towards Accurate Binary Convolutional Neural Network},
+	 url = {https://proceedings.neurips.cc/paper_files/paper/2017/file/b1a59b315fc9a3002ce38bbe070ec3f5-Paper.pdf},
+	 volume = {30},
+	 year = {2017}
+}
+@article{INQ,
+ 	 title={Incremental Network Quantization: Towards Lossless CNNs with Low-Precision Weights},
+ 	 author={Aojun Zhou and Anbang Yao and Yiwen Guo and Lin Xu and Yurong Chen},
+ 	 journal={ArXiv},
+ 	 year={2017},
+ 	 volume={abs/1702.03044}
+}
+@inproceedings{BNN,
+ 	author = {Hubara, Itay and Courbariaux, Matthieu and Soudry, Daniel and El-Yaniv, Ran and Bengio, Yoshua},
+ 	booktitle = {Advances in Neural Information Processing Systems},
+	 editor = {D. Lee and M. Sugiyama and U. Luxburg and I. Guyon and R. Garnett},
+	 pages = {},
+	 publisher = {Curran Associates, Inc.},
+	 title = {Binarized Neural Networks},
+	 url = {https://proceedings.neurips.cc/paper_files/paper/2016/file/d8330f857a17c53d217014ee776bfd50-Paper.pdf},
+	 volume = {29},
+	 year = {2016}
+}
+@inproceedings{XNOR-net,
+    Author = {Mohammad Rastegari and Vicente Ordonez and Joseph Redmon and Ali Farhadi},
+    Title = {XNOR-Net: ImageNet Classification Using Binary Convolutional Neural Networks},
+    Booktitle = {ECCV},
+    Year = {2016}
+}
+@inproceedings{TBN,
+  title={TBN: Convolutional Neural Network with Ternary Inputs and Binary Weights},
+  author={Diwen Wan and Fumin Shen and Li Liu and Fan Zhu and Jie Qin and Ling Shao and Heng Tao Shen},
+  booktitle={European Conference on Computer Vision},
+  year={2018}
+}
+
+@article{TWN,
+  author    = {Fengfu Li and
+               Bin Liu},
+  title     = {Ternary Weight Networks},
+  journal   = {CoRR},
+  volume    = {abs/1605.04711},
+  year      = {2016},
+  url       = {http://arxiv.org/abs/1605.04711},
+  eprinttype = {arXiv},
+  eprint    = {1605.04711}
+}
 
 @article{FP-BNN,
 	title = {FP-BNN: Binarized neural network on FPGA},
@@ -217,7 +320,53 @@
 	author = {Shuang Liang and Shouyi Yin and Leibo Liu and Wayne Luk and Shaojun Wei}
 }
 
+@inproceedings{lowrank,
+	 author = {Indyk, Piotr and Vakilian, Ali and Yuan, Yang},
+ 	booktitle = {Advances in Neural Information Processing Systems},
+ 	editor = {H. Wallach and H. Larochelle and A. Beygelzimer and F. d\textquotesingle Alch\'{e}-Buc and E. Fox and R. Garnett},
+ 	pages = {},
+ 	publisher = {Curran Associates, Inc.},
+ 	title = {Learning-Based Low-Rank Approximations},
+ 	url = {https://proceedings.neurips.cc/paper_files/paper/2019/file/1625abb8e458a79765c62009235e9d5b-Paper.pdf},
+ 	volume = {32},
+ 	year = {2019}
+}
+@InProceedings{SVD,
+	author={Bermeitinger, Bernhard and Hrycej, Tomas and Handschuh, Siegfried},
+	title={Singular Value Decomposition and Neural Networks},
+	booktitle={rtificial Neural Networks and Machine Learning -- ICANN 2019: Deep Learning},
+	year={2019},
+	publisher={Springer International Publishing},
+	pages={153--164},
+}
 
+@article{TensorTrain,
+	author = {Oseledets, I. V.},
+	title = {Tensor-Train Decomposition},
+	journal = {SIAM Journal on Scientific Computing},
+	volume = {33},
+	number = {5},
+	pages = {2295-2317},
+	year = {2011},
+	doi = {10.1137/090752286},
+}
+@INPROCEEDINGS{CP,
+  author={Ma, Ruixin and Wang, Chuang and Li, Xin},
+  booktitle={2021 IEEE Intl Conf on Dependable, Autonomic and Secure Computing, Intl Conf on Pervasive Intelligence and Computing, Intl Conf on Cloud and Big Data Computing, Intl Conf on Cyber Science and Technology Congress (DASC/PiCom/CBDCom/CyberSciTech)}, 
+  title={CP Decomposition for Fast training of Bi-LSTM}, 
+  year={2021},
+  volume={},
+  number={},
+  pages={244-248},
+  doi={10.1109/DASC-PICom-CBDCom-CyberSciTech52372.2021.00051}}
+
+@InProceedings{BT,
+	author = {Ye, Jinmian and Wang, Linnan and Li, Guangxi and Chen, Di and Zhe, Shandian and Chu, Xinqi and Xu, Zenglin},
+	title = {Learning Compact Recurrent Neural Networks With Block-Term Tensor Decomposition},
+	booktitle = {Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+	month = {June},
+	year = {2018}
+}
 
 @InProceedings{QuantCVPR,
 	author = {Jacob, Benoit and Kligys, Skirmantas and Chen, Bo and Zhu, Menglong and Tang, Matthew and Howard, Andrew and Adam, Hartwig and Kalenichenko, Dmitry},
@@ -302,6 +451,34 @@
   pages = {527-529},
   address = {Chengdu},
   booktitle = {China-Japan Joint Microwave Conference Proceedings}
+}
+
+@inproceedings{AlexNet,
+ 	author = {Krizhevsky, Alex and Sutskever, Ilya and Hinton, Geoffrey E},
+ 	booktitle = {Advances in Neural Information Processing Systems},
+ 	editor = {F. Pereira and C.J. Burges and L. Bottou and K.Q. Weinberger},
+ 	pages = {},
+ 	publisher = {Curran Associates, Inc.},
+ 	title = {ImageNet Classification with Deep Convolutional Neural Networks},
+ 	url = {https://proceedings.neurips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf},
+ 	volume = {25},
+ 	year = {2012}
+}
+@article{Cudnn,
+  author    = {Sharan Chetlur and
+               Cliff Woolley and
+               Philippe Vandermersch and
+               Jonathan Cohen and
+               John Tran and
+               Bryan Catanzaro and
+               Evan Shelhamer},
+  title     = {cuDNN: Efficient Primitives for Deep Learning},
+  journal   = {CoRR},
+  volume    = {abs/1410.0759},
+  year      = {2014},
+  url       = {http://arxiv.org/abs/1410.0759},
+  eprinttype = {arXiv},
+  eprint    = {1410.0759}
 }
 
 @book{zhu1973wulixue,
