@@ -1,3 +1,94 @@
+@Book{Deeplearning,
+  	Title                    = {Deep Learning},
+ 	 Author                   = {Ian J. Goodfellow and Yoshua Bengio and Aaron Courville},
+ 	 Publisher                = {MIT Press},
+ 	 Year                     = {2016},
+	  Address                  = {Cambridge, MA, USA},
+	  Note                     = {\url{http://www.deeplearningbook.org}}
+}
+
+@inproceedings{Transformer,
+ 	author = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, \L ukasz and Polosukhin, Illia},
+	 booktitle = {Advances in Neural Information Processing Systems},
+	 editor = {I. Guyon and U. Von Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett},
+	 pages = {},
+	 publisher = {Curran Associates, Inc.},
+ 	title = {Attention is All you Need},
+	 url = {https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf},
+	 volume = {30},
+	 year = {2017}
+}
+@inproceedings{GPT1,
+  title={Improving Language Understanding by Generative Pre-Training},
+  author={Alec Radford and Karthik Narasimhan},
+  year={2018}
+}
+@article{GPT2,
+  title={Language Models are Unsupervised Multitask Learners},
+  author={Radford, Alec and Wu, Jeff and Child, Rewon and Luan, David and Amodei, Dario and Sutskever, Ilya},
+  year={2019}
+}
+@misc{GPT4,
+      title={GPT-4 Technical Report}, 
+      author={OpenAI},
+      year={2023},
+      eprint={2303.08774},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+@ARTICLE{CDSC
+  author={Cong, Jason and Sarkar, Vivek and Reinman, Glenn and Bui, Alex},
+  journal={IEEE Design & Test of Computers}, 
+  title={Customizable Domain-Specific Computing}, 
+  year={2011},
+  volume={28},
+  number={2},
+  pages={6-15},
+  doi={10.1109/MDT.2010.141}
+}
+@article{DSA,
+  title={A new golden age for computer architecture},
+  author={Hennessy, John L and Patterson, David A},
+  journal={Communications of the ACM},
+  volume={62},
+  number={2},
+  pages={48--60},
+  year={2019},
+  publisher={ACM New York, NY, USA}
+}
+@article{DianNao,
+	author = {Chen, Yunji and Chen, Tianshi and Xu, Zhiwei and Sun, Ninghui and Temam, Olivier},
+	title = {DianNao Family: Energy-Efficient Hardware Accelerators for Machine Learning},
+	year = {2016},
+	publisher = {Association for Computing Machinery},
+	address = {New York, NY, USA},
+	volume = {59},
+	number = {11},
+	issn = {0001-0782},
+	url = {https://doi.org/10.1145/2996864},
+	doi = {10.1145/2996864},
+	journal = {Commun. ACM},
+	month = {oct},
+	pages = {105–112},
+	numpages = {8}
+}
+@inproceedings{FPGA_ACC,
+	author = {Zhang, Chen and Li, Peng and Sun, Guangyu and Guan, Yijin and Xiao, Bingjun and Cong, Jason},
+	title = {Optimizing FPGA-Based Accelerator Design for Deep Convolutional Neural Networks},
+	year = {2015},
+	isbn = {9781450333153},
+	publisher = {Association for Computing Machinery},
+	address = {New York, NY, USA},
+	url = {https://doi.org/10.1145/2684746.2689060},
+	doi = {10.1145/2684746.2689060},
+	booktitle = {Proceedings of the 2015 ACM/SIGDA International Symposium on Field-Programmable Gate Arrays},
+	pages = {161–170},
+	numpages = {10},
+	keywords = {fpga, acceleration, roofline model, convolutional neural network},
+	location = {Monterey, California, USA},
+	series = {FPGA '15}
+}
+
 @article{Hornik,
   title = {Multilayer Feedforward Networks are Universal Approximators},
   author = {Kurt Hornik and Maxwell Stinchcombe and Halbert White},
@@ -70,13 +161,9 @@
 @conference{MobileNetsV2,
   author    = {Mark Sandler, Andrew G. Howard, Menglong Zhu and Andrey Zhmoginov and Liang Chieh Chen},
   title     = {MobileNetV2: Inverted Residuals and Linear Bottlenecks},
-  booktitle = {2018 {IEEE} Conference on Computer Vision and Pattern Recognition,
-               {CVPR} 2018, Salt Lake City, UT, USA, June 18-22, 2018},
+  booktitle = {2018 IEEE/CVPR Conference on Computer Vision and Pattern Recognition},
   pages     = {4510--4520},
-  publisher = {Computer Vision Foundation / {IEEE} Computer Society},
-  year      = {2018},
-  url       = {http://openaccess.thecvf.com/content\_cvpr\_2018/html/Sandler\_MobileNetV2\_Inverted\_Residuals\_CVPR\_2018\_paper.html},
-  doi       = {10.1109/CVPR.2018.00474},
+  year      = {2018}
 }
 @misc{squeezenet,
 	title={SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and \ensuremath{<}0.5{MB} model size},
@@ -106,6 +193,29 @@
 	location = {Lille, France},
 }
 
+@inproceedings{GRU,
+  author    = {Kyunghyun Cho and
+               Bart van Merrienboer and
+               {\c{C}}aglar G{\"{u}}l{\c{c}}ehre and
+               Dzmitry Bahdanau and
+               Fethi Bougares and
+               Holger Schwenk and
+               Yoshua Bengio},
+  editor    = {Alessandro Moschitti and
+               Bo Pang and
+               Walter Daelemans},
+  title     = {Learning Phrase Representations using {RNN} Encoder-Decoder for Statistical
+               Machine Translation},
+  booktitle = {Proceedings of the 2014 Conference on Empirical Methods in Natural
+               Language Processing, {EMNLP} 2014, October 25-29, 2014, Doha, Qatar,
+               {A} meeting of SIGDAT, a Special Interest Group of the {ACL}},
+  pages     = {1724--1734},
+  publisher = {{ACL}},
+  year      = {2014},
+  url       = {https://doi.org/10.3115/v1/d14-1179},
+  doi       = {10.3115/v1/d14-1179}
+}
+
 @article{slstm,
 	title={Sentence-State LSTM for Text Representation},
 	author={Zhang, Yue and Liu, Qi and Song, Linfeng},
@@ -123,13 +233,22 @@
 	url = {https://www.mi-research.net/en/article/doi/10.1007/s11633-016-1006-2},
 	author = {Guo-Bing Zhou,Jianxin Wu,Chen-Lin Zhang,Zhi-Hua Zhou}
 }
+@article{JANET,
+  title={The unreasonable effectiveness of the forget gate},
+  author={Van Der Westhuizen, Jos and Lasenby, Joan},
+  journal={arXiv preprint arXiv:1804.04849},
+  year={2018}
+}
+
+
 @inproceedings{pruning_filters,
 	title={Pruning Filters for Efficient ConvNets},
-	author={Hao Li, Asim Kadav, Igor Durdanovic, Hanan Samet, Hans Peter Graf},
+	author={Hao Li and Asim Kadav and Igor Durdanovic and Hanan Samet and Hans Peter Graf},
 	booktitle={International Conference on Learning Representations},
 	year={2017},
 	url={https://openreview.net/forum?id=rJqFGTslg}
 }
+
 @InProceedings{purning_channel,
 	author = {He, Yihui and Zhang, Xiangyu and Sun, Jian},
 	title = {Channel Pruning for Accelerating Very Deep Neural Networks},
@@ -141,8 +260,6 @@
  author = {Han, Song and Pool, Jeff and Tran, John and Dally, William},
  booktitle = {Advances in Neural Information Processing Systems},
  editor = {C. Cortes and N. Lawrence and D. Lee and M. Sugiyama and R. Garnett},
- pages = {},
- publisher = {Curran Associates, Inc.},
  title = {Learning both Weights and Connections for Efficient Neural Network},
  url = {https://proceedings.neurips.cc/paper/2015/file/ae0eb3eed39d2bcef4622b2499a05fe6-Paper.pdf},
  volume = {28},
