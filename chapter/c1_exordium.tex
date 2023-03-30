@@ -71,11 +71,11 @@ ShuffleNet\citing{Shuffnet}，SqueezeNet\citing{squeezenet}等在不损失模型
 采用结构化的剪枝方法，以二维矩阵块为剪枝粒度，剪枝后的权重消除了计算的不平衡性。文献\citing{purning_channel,purning_filters}以CNN中的Kernel，Filter，Channel为剪枝对象，同样
 增加了剪枝粒度，在极大减小模型参数的同时又保持了对硬件执行友好的特性。粗颗粒剪枝具有压缩率高，数据结构规则等优势，但同时也面临着模型
 准确率下降的问题，Cao\citing{Cao}提出了基于组平衡稀疏的剪枝方法，在矩阵块间保持计算平衡的基础上对每一块内部采用细颗粒的权重剪枝，提高了模型的准确率。
-AutoMl\citing{AutoMl1,AutoMl2}等自动优化方法将剪枝定义为一个优化问题，能够以较高的精度自动搜索最佳的剪枝位置和比例。
+AutoMl\citing{AutoMl1,AutoMl2}等自动优化方法将剪枝定义为一个优化问题，该方法能够以较高的精度自动搜索最佳的剪枝位置和比例。
 
 数值量化是一种从硬件实现的角度对数值的比特位宽进行压缩的方法。对于数值精度不敏感的应用，在推理过程中无论使用32位的浮点格式，还是16位定点格式，
-对于模型预测几乎没有影响。对于数值精度敏感的应用，提高数据的表示精度固然会带来模型预测精度提升，但其边际效益越来越小。因此，考虑到硬件资源约束
-和经济收益，数值量化是一种必要的模型压缩手段。模型量化方法包括多比特量化（LQ-Nets\citing{LQ-net}，DoReFa-Net\citing{DoReFa}，ABC-Net\citing{ABC-net}，INQ\citing{INQ}）
+对于模型预测精度几乎没有影响。对于数值精度敏感的应用，提高数据的表示精度固然会带来模型预测精度提升，但其边际效益越来越小。因此，考虑到硬件资源约束
+和经济收益，数值量化是一种必要的模型压缩手段。模型量化方法包括多比特量化（LQ-Nets\citing{LQ-nets}，DoReFa-Net\citing{DoReFa}，ABC-Net\citing{ABC-net}，INQ\citing{INQ}）
 和低比特量化（BNN\citing{BNN}，XNOR-Net\citing{XNOR-net}，TBN\citing{TBN}，TWN\citing{TWN}）。Liang提出的二值神经网络FP-BNN\citing{FP-BNN}模型，采用\{-1,+1\}
 二值化参数及其线性组合来近似表示全精度数值，在模型峰值的性能下，基于FPGA实现了较CPU和GPU运算速率的705倍和70倍。实际情况下，多比特
 具有更好的表达能力，文献\citing{QuantCVPR,HitNet,TernaryQuanti}表明在一些分类应用中8比特定点足以保证模型推理的准确率。文献\citing{DeepRnn}采用16位
@@ -97,8 +97,8 @@ Tucker分解\citing{Tucker}，Tensor-Train分解\citing{TensorTrain}，CP分解\
 低成本等优势，广泛应用于领域专用计算中，尤其是在通信和人工智能应用中。
 
 GPU（Graph Process Unit）以图像处理而闻名，在深度学习计算也十分高效。GPU拥有数千个并行计算单元（SIMD），非常适合矩阵的线性运算。自从2012年
-AlexNet\citing{AlxNet}在ImageNet的比赛中取胜以来，GPU越来越演变成神经网络计算的通用平台。英伟达最新的Hopper架构\citing{}GPU集成了专门针对深度学习的TensorCore，
-可加速所有精度（FP64，TF32，FP32，FP16和INT8），提供1000TFlops的浮点算力。在软件服务上，CUDA和AI加速库cuDNN\citing{Cudnn}提供了完善的开发环境和成熟的工具链。
+AlexNet\citing{AlexNet}在ImageNet的比赛中取胜以来，GPU越来越演变成神经网络计算的通用平台。英伟达最新的Hopper架构GPU集成了专门针对深度学习的TensorCore\citing{TensorCore}，
+可加速所有精度（FP64，TF32，FP32，FP16和INT8），提供1000TFlops的浮点算力。在软件服务上，CUDA和AI加速库cuDNN提供了完善的开发环境和成熟的工具链。
 TensorFlow，Pytorch，Caffe，Theano和PaddlePaddle等深度神经网络框架也也都提供GPU加速服务，这使得用户可以基于GPU快速开发针对各种应用的
 神经网络模型，极大的解放了生产力。
 

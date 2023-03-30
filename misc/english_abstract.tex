@@ -1,8 +1,38 @@
 
 \begin{englishabstract}
-With the widespread engineering applications ranging from broadband signals and non-linear systems, time-domain integral equations (TDIE) methods for analyzing transient electromagnetic scattering problems are becoming widely used nowadays. TDIE-based marching-on-in-time (MOT) scheme and its fast algorithm are researched in this dissertation, including the numerical techniques of MOT scheme, late-time stability of MOT scheme, and two-level PWTD-enhanced MOT scheme. The contents are divided into four parts shown as follows.
-	
-\englishkeyword{Time-domain Electromagnetic Scattering, Time-domain Integral Equation, Marching-on In-time (MOT) Scheme, Late-time Instability, Plane Wave Time-domain (PWTD) Algorithm}
+Recurrent Neural Networks (RNNs) are a type of neural network designed specifically for processing sequential data, 
+and are widely used in various fields such as speech recognition, machine translation, and dynamic system modeling. 
+RNNs have shown superior performance compared to other neural networks in time sequences related tasks.
+With the increasing complexity of tasks and demanding for better model prediction accuracy, the parameter size of 
+Recurrent Neural Networks (RNNs) has also become larger, which resulting 
+in significant storage and computational pressure on hardware implementation platforms and also lead to the high latency problem. 
+Those problems hinder the wider application of RNNs in various scenarios, such as embedded system and IoT environments.
+Existing work has proposed some classical solutions, such as pruning algorithms and hardware accelerators, focusing on 
+model compression and hardware acceleration techniques. 
+However, these solutions have great shortcomings such as high compression costs and strong accelerator specialization, 
+making them unsuitable for scenarios requiring dynamic adjustment of accuracy and speed, which are commonly encountered. 
+Therefore, there is significant practical value in developing Recurrent Neural Network (RNN) acceleration technologies with 
+the ability to dynamically adjust precision and speed.
+
+To solve the above problems, this thesis designs and implements an RNN acceleration system with adjustable precision and 
+speed based on FPGA. 
+This system leverages the low-cost advantage of projection-based compression algorithm and organically integrates it with 
+the forward propagation process of the network to generate and switch to specified network sizes during system running,
+ultimately achieving the goal of adjusting the system's accuracy and speed. 
+Firstly, this thesis analyzed and designed the system architecture, and mapped each function component to specific software 
+and hardware implementations. The rational partitioning enables the system to operate efficiently.
+Secondly, in terms of software algorithm design, this thesis considers possible emergent situations during system operation 
+and proposes methods based on pre-set projection matrices method and state sampling method, respectively corresponding to 
+normal state scenarios and abnormal state scenarios. 
+Sufficient consideration of various scenarios enhances the system's robustness in different environments.
+Thirdly, in terms of hardware implementation, this thesis designed a hardware accelerator to accelerate the forward propagation 
+process of recurrent neural networks. The accelerator can run two different network models and adjust the model's size, 
+Dynamic adjustability is achieved from the blocked matrix-vector multiplication.
+Finally, this thesis optimizes the resource consumption of the system by using a segmented cubic function approximation method to 
+optimize the resource consumption of the activation function module.
+Experimental results on the system performance show that the designed and implemented recurrent neural network acceleration system 
+in this thesis has dynamic adjustability of accuracy and speed. Performance testing experiments on the accelerator indicate that
+the resource consumption of this accelerator is reasonable.
+
+\englishkeyword{Recurrent Neural NetWorks, Echo State Networks, Hardware Accelerator, FPGA, High-Level Synthesis}
 \end{englishabstract}
-
-
