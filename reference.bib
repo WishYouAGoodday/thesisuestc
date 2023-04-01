@@ -8,37 +8,42 @@
 }
 
 @inproceedings{Transformer,
- 	author = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, \L ukasz and Polosukhin, Illia},
+ 	 author = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N and Kaiser, \L ukasz and Polosukhin, Illia},
 	 booktitle = {Advances in Neural Information Processing Systems},
-	 editor = {I. Guyon and U. Von Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett},
-	 pages = {},
-	 publisher = {Curran Associates, Inc.},
- 	title = {Attention is All you Need},
-	 url = {https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf},
-	 volume = {30},
+ 	 title = {Attention is All you Need},
 	 year = {2017}
 }
-@inproceedings{GPT1,
-  title={Improving Language Understanding by Generative Pre-Training},
-  author={Alec Radford and Karthik Narasimhan},
-  year={2018}
+
+@article{GPT1,
+  title={Improving language understanding by generative pre-training},
+  author={Radford, Alec and Narasimhan, Karthik and Salimans, Tim and Sutskever, Ilya and others},
+  year={2018},
+  journal={OpenAI},
+  volume={1},
+  number={8},
+  pages={9}
 }
+
 @article{GPT2,
-  title={Language Models are Unsupervised Multitask Learners},
-  author={Radford, Alec and Wu, Jeff and Child, Rewon and Luan, David and Amodei, Dario and Sutskever, Ilya},
+  title={Language models are unsupervised multitask learners},
+  author={Radford, Alec and Wu, Jeffrey and Child, Rewon and Luan, David and Amodei, Dario and Sutskever, Ilya and others},
+  journal={OpenAI blog},
+  volume={1},
+  number={8},
+  pages={9},
   year={2019}
 }
-@misc{GPT4,
-      title={GPT-4 Technical Report}, 
-      author={OpenAI},
-      year={2023},
-      eprint={2303.08774},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
+
+@article{GPT4,
+  title={GPT-4 Technical Report},
+  author={OpenAI},
+  journal={arXiv preprint arXiv:2303.08774},
+  year={2023}
 }
-@ARTICLE{CDSC
+
+@ARTICLE{CDSC,
   author={Cong, Jason and Sarkar, Vivek and Reinman, Glenn and Bui, Alex},
-  journal={IEEE Design /& Test of Computers}, 
+  journal={IEEE Design and Test of Computers}, 
   title={Customizable Domain-Specific Computing}, 
   year={2011},
   volume={28},
@@ -128,15 +133,13 @@
 	title = {Untersuchungen zu dynamischen neuronalen Netzen}
 }
 
-
-
-@article{NAS_ICLR,
-	author = {Zoph, Barret and Le, Quoc},
-	journal = {Proc. ICLR},
-	year = {2017},
-	month = {4},
-	pages = {1-2},
-	title = {Neural Architecture Search with Reinforcement Learning}
+@inproceedings{
+	NAS_ICLR,
+	title={Neural Architecture Search with Reinforcement Learning},
+	author={Barret Zoph and Quoc Le},
+	booktitle={International Conference on Learning Representations},
+	year={2017},
+	url={https://openreview.net/forum?id=r1Ue8Hcxg}
 }
 
 @conference{NAS_CVPR,
@@ -151,41 +154,26 @@
 }
 
 @article{MobileNetsV1,
-  author    = {Andrew G. Howard, Menglong Zhu, Bo Chen, Dmitry Kalenichenko and Weijun Wang},
-  title     = {MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications},
-  journal   = {CoRR},
-  volume    = {abs/1704.04861},
-  year      = {2017}
+  title={MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications},
+  author={Andrew G. Howard and Menglong Zhu and Bo Chen and Dmitry Kalenichenko and Weijun Wang and Tobias Weyand and Marco Andreetto and Hartwig Adam},
+  journal={arXiv preprint arXiv:1704.04861},
+  year={2017}
 }
-
 @article{MobileNetsV2,
   title={Mobilenetv2: Inverted residuals and linear bottlenecks},
-  author={Sandler, Mark and Howard, Andrew and Zhu, Menglong and Zhmoginov, Andrey and Chen, Liang-Chieh},
+  author={Sandler, Mark and Howard, Andrew and Zhu, Menglong and Zhmoginov, Andrey and Chen, LiangChieh},
   booktitle={Proceedings of the IEEE conference on computer vision and pattern recognition},
-  pages={4510--4520},
+  volume = {},
+  pages={4510-4520},
   year={2018}
 }
-@inproceedings{MobileNetsV2,
-  author    = {Mark Sandler and
-               Andrew G. Howard and
-               Menglong Zhu and
-               Andrey Zhmoginov and
-               Liang{-}Chieh Chen},
-  title     = {MobileNetV2: Inverted Residuals and Linear Bottlenecks},
-  booktitle = {2018 {IEEE} Conference on Computer Vision and Pattern Recognition,
-               {CVPR} 2018, Salt Lake City, UT, USA, June 18-22, 2018},
-  pages     = {4510--4520},
-  publisher = {Computer Vision Foundation / {IEEE} Computer Society},
-  year      = {2018}
+@article{squeezenet,
+  title={SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and <1MB model size},
+  author={Forrest N. Iandola and Matthew W. Moskewicz and Khalid Ashraf and Song Han and William J. Dally and Kurt Keutzer},
+  journal={arXiv preprint arXiv:1602.07360},
+  year={2016}
 }
 
-
-@misc{squeezenet,
-	title={SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and \ensuremath{<}0.5{MB} model size},
-	author={Forrest N. Iandola and Song Han and Matthew W. Moskewicz and Khalid Ashraf and William J. Dally and Kurt Keutzer},
-	year={2017},
-	url={https://openreview.net/forum?id=S1xh5sYgx}
-}
 
 @conference{Shuffnet,
   author={Zhang, Xiangyu and Zhou, Xinyu and Lin, Mengxiao and Sun, Jian},
@@ -231,23 +219,31 @@
   doi       = {10.3115/v1/d14-1179}
 }
 
-@article{slstm,
-	title={Sentence-State LSTM for Text Representation},
-	author={Zhang, Yue and Liu, Qi and Song, Linfeng},
-	booktitle={Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (ACL)}, year={2018}
+@inproceedings{slstm,
+    title = {Sentence-State {LSTM} for Text Representation},
+    author = {Zhang, Yue  and
+      Liu, Qi  and
+      Song, Linfeng},
+    booktitle = {Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+    year = {2018},
+    address = {Melbourne, Australia},
+    publisher = {Association for Computational Linguistics},
+    url = {https://aclanthology.org/P18-1030},
+    doi = {10.18653/v1/P18-1030},
+    pages = {317--327},
 }
+
 @article{mgu,
-	title = {Minimal Gated Unit for Recurrent Neural Networks},
-	journal = {International Journal of Automation and Computing},
-	volume = {13},
-	number = {gjzdhyjszz-13-03-226},
-	pages = {226},
-	year = {2016},
-	issn = {2731-538X},
-	doi = {10.1007/s11633-016-1006-2},
-	url = {https://www.mi-research.net/en/article/doi/10.1007/s11633-016-1006-2},
-	author = {Guo-Bing Zhou,Jianxin Wu,Chen-Lin Zhang,Zhi-Hua Zhou}
+  title={Minimal gated unit for recurrent neural networks},
+  author={Zhou, GuoBing and Wu, Jianxin and Zhang, ChenLin and Zhou, ZhiHua},
+  journal={International Journal of Automation and Computing},
+  volume={13},
+  number={3},
+  pages={226--234},
+  year={2016},
+  publisher={Springer}
 }
+
 @article{JANET,
   title={The unreasonable effectiveness of the forget gate},
   author={Van Der Westhuizen, Jos and Lasenby, Joan},
@@ -338,18 +334,16 @@
 	series = {FPGA '19}
 }
 
-@article{AutoMl1,
-	title = {AutoPruner: An end-to-end trainable filter pruning method for efficient deep model inference},
-	journal = {Pattern Recognition},
-	volume = {107},
-	pages = {107461},
-	year = {2020},
-	issn = {0031-3203},
-	doi = {https://doi.org/10.1016/j.patcog.2020.107461},
-	url = {https://www.sciencedirect.com/science/article/pii/S0031320320302648},
-	author = {Jian-Hao Luo and Jianxin Wu}
-}
 
+@article{AutoMl1,
+  title={Autopruner: An end-to-end trainable filter pruning method for efficient deep model inference},
+  author={Luo, JianHao and Wu, Jianxin},
+  journal={Pattern Recognition},
+  volume={107},
+  pages={107461},
+  year={2020},
+  publisher={Elsevier}
+}
 @inproceedings{AutoMl2,
 	author = {He, Yihui and Lin, Ji and Liu, Zhijian and Wang, Hanrui and Li, Li-Jia and Han, Song},
 	title = {AMC: AutoML for Model Compression and Acceleration on Mobile Devices},
@@ -372,20 +366,10 @@
 }
 
 @article{DoReFa,
-  author    = {Shuchang Zhou and
-               Zekun Ni and
-               Xinyu Zhou and
-               He Wen and
-               Yuxin Wu and
-               Yuheng Zou},
-  title     = {DoReFa-Net: Training Low Bitwidth Convolutional Neural Networks with
-               Low Bitwidth Gradients},
-  journal   = {CoRR},
-  volume    = {abs/1606.06160},
-  year      = {2016},
-  url       = {http://arxiv.org/abs/1606.06160},
-  eprinttype = {arXiv},
-  eprint    = {1606.06160}
+  title={Dorefa-net: Training low bitwidth convolutional neural networks with low bitwidth gradients},
+  author={Zhou, Shuchang and Wu, Yuxin and Ni, Zekun and Zhou, Xinyu and Wen, He and Zou, Yuheng},
+  journal={arXiv preprint arXiv:1606.06160},
+  year={2016}
 }
 @inproceedings{ABC-net,
 	 author = {Lin, Xiaofan and Zhao, Cong and Pan, Wei},
@@ -401,9 +385,8 @@
 @article{INQ,
  	 title={Incremental Network Quantization: Towards Lossless CNNs with Low-Precision Weights},
  	 author={Aojun Zhou and Anbang Yao and Yiwen Guo and Lin Xu and Yurong Chen},
- 	 journal={ArXiv},
+	 journal={arXiv preprint arXiv:1702.03044},
  	 year={2017},
- 	 volume={abs/1702.03044}
 }
 @inproceedings{BNN,
  	author = {Hubara, Itay and Courbariaux, Matthieu and Soudry, Daniel and El-Yaniv, Ran and Bengio, Yoshua},
@@ -412,7 +395,6 @@
 	 pages = {},
 	 publisher = {Curran Associates, Inc.},
 	 title = {Binarized Neural Networks},
-	 url = {https://proceedings.neurips.cc/paper_files/paper/2016/file/d8330f857a17c53d217014ee776bfd50-Paper.pdf},
 	 volume = {29},
 	 year = {2016}
 }
@@ -433,13 +415,10 @@
   author    = {Fengfu Li and
                Bin Liu},
   title     = {Ternary Weight Networks},
-  journal   = {CoRR},
-  volume    = {abs/1605.04711},
-  year      = {2016},
-  url       = {http://arxiv.org/abs/1605.04711},
-  eprinttype = {arXiv},
-  eprint    = {1605.04711}
+  journal={arXiv preprint arXiv:1605.04711},
+  year = {2016}
 }
+
 
 @article{FP-BNN,
 	title = {FP-BNN: Binarized neural network on FPGA},
@@ -464,15 +443,16 @@
  	volume = {32},
  	year = {2019}
 }
-@InProceedings{SVD,
-	author={Bermeitinger, Bernhard and Hrycej, Tomas and Handschuh, Siegfried},
-	title={Singular Value Decomposition and Neural Networks},
-	booktitle={rtificial Neural Networks and Machine Learning -- ICANN 2019: Deep Learning},
-	year={2019},
-	publisher={Springer International Publishing},
-	pages={153--164},
-}
 
+@inproceedings{bermeitinger2019singular,
+  title={Singular value decomposition and neural networks},
+  author={Bermeitinger, Bernhard and Hrycej, Tomas and Handschuh, Siegfried},
+  booktitle={Artificial Neural Networks and Machine Learning},
+  volume={},
+  pages={153--164},
+  year={2019},
+  organization={Springer}
+}
 @inproceedings{Tucker,
 	 author = {Malik, Osman Asif and Becker, Stephen},
 	 booktitle = {Advances in Neural Information Processing Systems},
@@ -555,29 +535,33 @@
 @article{Lacey,
   title={Deep Learning on FPGAs: Past, Present, and Future},
   author={Griffin Lacey and Graham W. Taylor and Shawki Areibi},
-  journal={ArXiv},
-  year={2016},
-  volume={abs/1602.04283}
+  journal={arXiv preprint arXiv:1602.04283},
+  year={2016}
 }
 
-@article{DeepRnn,
-  title={Hardware accelerators for recurrent neural networks on FPGA},
-  author={Andre Xian Ming Chang and Eugenio Culurciello},
-  journal={2017 IEEE International Symposium on Circuits and Systems (ISCAS)},
+
+@INPROCEEDINGS{DeepRnn,
+  author={Chang, Andre Xian Ming and Culurciello, Eugenio},
+  booktitle={2017 IEEE International Symposium on Circuits and Systems (ISCAS)}, 
+  title={Hardware accelerators for recurrent neural networks on FPGA}, 
   year={2017},
-  pages={1-4}
+  volume={},
+  number={},
+  pages={1-4},
+  doi={10.1109/ISCAS.2017.8050816}
 }
 
 
 @ARTICLE{WangLong:TNNLS'23,
-  author={Wang, Hai and Long, Xingyi and Liu, Xue-Xin},
+  author={Wang, Hai and Long, Xingyi and Liu, XueXin},
   journal={IEEE Transactions on Neural Networks and Learning Systems}, 
   title={fastESN: Fast Echo State Network}, 
   year={2022},
   volume={},
   number={},
   pages={1-15},
-  doi={10.1109/TNNLS.2022.3167466}}
+  doi={10.1109/TNNLS.2022.3167466}
+}
 
 @inproceedings{AlexNet,
  	author = {Krizhevsky, Alex and Sutskever, Ilya and Hinton, Geoffrey E},
@@ -610,7 +594,7 @@
                Evan Shelhamer},
   title     = {cuDNN: Efficient Primitives for Deep Learning},
   journal   = {CoRR},
-  volume    = {abs/1410.0759},
+  volume    = {1410.0759},
   year      = {2014},
   url       = {http://arxiv.org/abs/1410.0759},
   eprinttype = {arXiv},
