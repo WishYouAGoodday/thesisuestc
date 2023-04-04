@@ -18,17 +18,17 @@ To solve the above problems, this thesis researches the acceleration techniques 
 designs and implements an RNN acceleration system with adjustable precision and 
 speed based on FPGA. 
 This system leverages the low-cost advantage of projection-based compression algorithm and organically integrates it with 
-the forward propagation process of the network to generate and switch to specified network sizes during system running,
-ultimately achieving the goal of adjusting the system's accuracy and speed. 
+the forward propagation process of the network to generate and switch to specified network sizes during system running, ultimately 
+achieving the goal of adjusting the system's accuracy and speed. 
 Firstly, this thesis analyzed and designed the system architecture, and mapped each function component to specific software 
 and hardware implementations. The rational partitioning enables the system to operate efficiently.
-Secondly, in terms of software algorithm design, this thesis considers possible emergent situations during system operation 
+Secondly, in terms of software algorithm design, this thesis considers possible emergent situations during system running 
 and proposes methods based on pre-set projection matrices method and state sampling method, respectively corresponding to 
 normal state scenarios and abnormal state scenarios. 
 Sufficient consideration of various scenarios enhances the system's robustness in different environments.
 Thirdly, in terms of hardware implementation, this thesis designed a hardware accelerator to accelerate the forward propagation 
 process of recurrent neural networks. The accelerator can run two different network models and adjust the model's size, 
-Dynamic adjustability is achieved from the blocked matrix-vector multiplication.
+dynamic adjustability is achieved from the blocked matrix-vector multiplication.
 Finally, this thesis optimizes the resource consumption of the system by using a segmented cubic function approximation method to 
 optimize the resource consumption of the activation function module.
 Experimental results on the system performance show that the designed and implemented recurrent neural network acceleration system 
