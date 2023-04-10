@@ -15,14 +15,14 @@
 常见的循环神经网络结构如图~\ref{fig:rnn} 所示，权重矩阵\(U, W, V\)分别表示输入层到到隐藏层，隐藏层到隐藏层，隐藏层到输出层之间神经元的连接，向量\(x, h, o\)分别表示输入单元，
 隐藏单元和输出单元，这些单元相互连接形成网络。相比于其他网络模型的单向信息传递，循环神经网络引入环状结构实现了从输入到输出的双向信息
 流动。一些符合训练准则的信息将会通过循环的方式长期保存在网络状态中，并根据输入序列特征适时唤醒记忆。当网络记忆的信息足够丰富时，循环神经
-网络不仅能准确的预测输出，并且能大致恢复输入序列。自编码器框架\citing{AEC}就是基于此原理而产生，其能根据记忆的状态信息选择重要的输入并近似复制到输出，
+网络不仅能准确的预测输出，并且能大致恢复输入序列。自编码器框架\citing{Baldi:UTLW'11}就是基于此原理而产生，其能根据记忆的状态信息选择重要的输入并近似复制到输出，
 实现特征学习或降维。图中左侧为循环神经网络回路原理图，黑色方块表示回路中单个时间步的延迟，即时刻t-1的状态会影响时刻t的状态。图中右侧为
 循环神经网络按时间展开的计算图，展开是指将左侧的回路结构映射为右侧的包含重复组件的结构，展开的深度取决与序列的长度。循环神经网络展开结构图
 显式的数据流动路径描述了信息是如何在时间上向前和向后传递的。
 \begin{figure}
 	\centering
 	\includegraphics[width=0.8\columnwidth]{RNN_struct.eps}
-	\caption{普通循环神经网络结构图}
+	\caption{普通循环神经网络结构的回路图和展开图}
 	\label{fig:rnn}
 \end{figure}
 
@@ -56,7 +56,7 @@
 \subsection{长短期记忆神经网络}
 长短期记忆神经网络（Long short-term memory,LSTM）是目前应用范围最广的一种循环神经网络，相比于普通循环神经网络，LSTM能更容易的学习到序列的长期依赖关系。
 其结构中存在多层循环，除了外部的循环外，内部还存在“LSTM细胞”自循环。多层循环使得时间路径增加，梯度消失的可能性被大大降低，因此更深的循环神经
-网络架构也得以实现\citing{DeepLstm}。
+网络架构也得以实现\citing{Hasim:PI'15}。
 
 LSTM网络结构如图~\ref{fig:lstm} 所示，输入信息需要经过多条数据路径并进行复杂的加工处理才能最终到达隐藏层，这些位于数据路径中的“门”控制着信息的通过率。
 其值越接近1表示该信息越需要被记忆，越接近0表示信息应该迅速被丢弃。通过控制信息的通过率，网络能够在较长的时间内持续积累线索，并且尽量少的受
@@ -73,7 +73,7 @@ LSTM网络的展开图，同一组件按时间顺序依次排开形成时间维�
 \begin{figure}
 	\centering
 	\includegraphics[width=1\columnwidth]{LSTM_struct.eps}
-	\caption{LSTM结构图}
+	\caption{长短期记忆网络结构的回路图和展开图}
 	\label{fig:lstm}
 \end{figure}
 
@@ -95,7 +95,7 @@ LSTM网络的数学模型为式~(\ref{eq:lstm})，该表达式详细说明了LST
 
 \subsection{回声状态网络}
 回声状态网络（Echo state network，ESN）是一种基于储层计算（reservoir computing）的神经网络，它通过固定输入层和隐藏层的权重矩阵巧妙的避免了循环神经网络
-训练过程中梯度消失和梯度爆炸的问题，广泛应用于序列预测和动态系统建模。由于其易于训练，基于回声状态网络搭建的深度循环神经网络能够实现并应用\citing{DeepESN}，
+训练过程中梯度消失和梯度爆炸的问题，广泛应用于序列预测和动态系统建模。由于其易于训练，基于回声状态网络搭建的深度循环神经网络能够实现并应用\citing{Claudio:NN'18}，
 这显著的增强循环神经网络学习和预测能力。此外，相比于其他循环神经网络，ESN结构更加简单，物理意义也易于解释。因此本文以回声状态网络为例，
 提出并设计针对循环神经网络前向传播过程的加速系统，并将该系统基于FPGA硬件实现。
 
@@ -288,13 +288,13 @@ FPGA可以实现更高的能效。
 	\begin{minipage}[t]{0.48\textwidth}
 		\centering
 		\includegraphics[width=1\columnwidth]{hls.png}
-		\caption{HLS流程图}
+		\caption{HLS设计流程图}
 		\label{fig:hls}
 	\end{minipage}
 	\begin{minipage}[t]{0.48\textwidth}
 		\centering
 		\includegraphics[width=1\columnwidth]{HScodesign.png}
-		\caption{基于HLS的软硬件协同示意图}
+		\caption{基于HLS的软硬件协同设计的流程图}
 		\label{fig:hlscodesign}
 	\end{minipage}
 \end{figure}

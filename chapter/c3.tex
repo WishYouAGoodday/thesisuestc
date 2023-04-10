@@ -36,7 +36,7 @@
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\columnwidth]{ESN_convert.eps}
-	\caption{原始网络和简化网络的结构图}
+	\caption{原始网络生成简化网络的示意图}
 	\label{fig:esn_convert}
 \end{figure}
 
@@ -157,8 +157,8 @@
 		V_x \Sigma_x U_x^T \ \xleftarrow{SVD} \ X;	\qquad	H \ \xrightarrow{SVD} \ V_h \Sigma_h U_h^T 	
 	\end{split}
 \end{equation}
-其中\(X = [x_1,x_2,...,x_{ns}] \in \mathbb{R}^{n \times n_s} \)，\(V_x \in \mathbb{R}^{n \times n_s},U_x \in \mathbb{R}^{n_s \times n_s}\)，\(\Sigma_x \in \mathbb{R}^{n \times n_s}\)
-是状态空间及其分解的子空间；\(H = [h_1,h_2,...,h_{ns}] \in \mathbb{R}^{n \times n_s} \)，\(V_h \in \mathbb{R}^{n \times n_s},U_h \in \mathbb{R}^{n_s \times n_s}\)，\(\Sigma_h \in \mathbb{R}^{n \times n_s}\)
+其中\(X = [x_1,x_2,...,x_{ns}] \in \mathbb{R}^{n \times n_s} \)，\(V_x \in \mathbb{R}^{n \times n_s},U_x \in \mathbb{R}^{n_s \times n_s}\)，\(\Sigma_x \in \mathbb{R}^{n_s \times n_s}\)
+是状态空间及其分解的子空间；\(H = [h_1,h_2,...,h_{ns}] \in \mathbb{R}^{n \times n_s} \)，\(V_h \in \mathbb{R}^{n \times n_s},U_h \in \mathbb{R}^{n_s \times n_s}\)，\(\Sigma_h \in \mathbb{R}^{n_s \times n_s}\)
 是激活函数空间和其分解的子空间。分解后的矩阵中，奇异值矩阵\(\Sigma\)和原矩阵是一一对应关系，左奇异矩阵和右奇异矩阵互为依赖，其作为一个整体和原矩阵保持对应关系。
 由于这种对应关系的存在，以及其标准正交特性，奇异矩阵可以作为原空间的近似并且可以当作投影矩阵。本文将左奇异矩阵\(V\)作为投影矩阵。
 
@@ -396,7 +396,7 @@ $\widehat{W}_{out} \leftarrow W_{out}V_x$	\;
 \begin{figure}
 	\centering
 	\includegraphics[width=0.9\columnwidth]{exp/fig_accArch.eps}
-	\caption{加速器整体架构图}
+	\caption{加速器整体架构。由运算单元，存储单元和控制单元组成}
 	\label{fig:accArch}
 \end{figure}
 
@@ -499,7 +499,7 @@ $$	\mathbf{c}_{i}= \mathbf{A}_{i1} \mathbf{b}_{1} + \mathbf{A}_{i2} \mathbf{b}_{
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\columnwidth]{exp/fig_compute.eps}
-	\caption{计算架构图}
+	\caption{计算架构图。基于矩阵向量乘法分块运算的方法设计}
 	\label{fig:compute}
 \end{figure}
 图~\ref{fig:compute} 所示为分块矩阵向量乘法的示意图，图中分块矩阵的大小为\(3 \times 3\)，原始矩阵的大小是\(9 \times 9\)，因此完成整个矩阵向量乘法
@@ -524,7 +524,7 @@ $$	\mathbf{c}_{i}= \mathbf{A}_{i1} \mathbf{b}_{1} + \mathbf{A}_{i2} \mathbf{b}_{
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\columnwidth]{exp/fig_memory.eps}
-	\caption{存储架构图}
+	\caption{存储架构图。“DRAM-BRAM-Register”三级存储系统}
 	\label{fig:memory}
 \end{figure}
 
