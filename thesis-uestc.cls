@@ -799,17 +799,17 @@ School: & \en@theschool \\
   \fontsize{14pt}{16pt}\selectfont\noindent\null\hspace{35pt}作者签名：\rule[-3pt]{4.1cm}{0.5pt}\hspace{42pt}%
   日期：\chinesespace\chinesespace 年\hspace{21pt}月\hspace{21pt}日 \\
   \noindent\begin{center}
-    \fontsize{18pt}{20pt}\selectfont\bfseries 论文使用授权
+    \fontsize{18pt}{20pt}\selectfont\bfseries 论文使用权
   \end{center}
   \par{\fontsize{14pt}{16pt}\selectfont\noindent\null\hspace{28pt}%
     本学位论文作者完全了解电子科技大学有关保留、使用学位论文的规定，%
-    有权保留并向国家有关部门或机构送交论文的复印件和磁盘，允许论文被查阅和借阅。%
+    同意学校有权保留并向国家有关部门或机构送交论文的复印件和磁盘，允许论文被查阅和借阅。%
     本人授权电子科技大学可以将学位论文的全部或部分内容编入有关数据库进行检索，%
     可以采用影印、缩印或扫描等复制手段保存、汇编学位论文。}
   \par{\fontsize{14pt}{16pt}\selectfont\noindent\null\hspace{28pt}
   \chineseleftparenthesis%
-  保密的学位论文在解密后应遵守此规定%
-  \chineserightparenthesis} \\[14pt]
+  涉密的学位论文须按照国家及学校相关规定管理，在解密后适用于本授权。%
+  \chineserightparenthesis} \\[1pt]
   \fontsize{14pt}{16pt}\selectfont\noindent\null\hspace{35pt}作者签名：\rule[-3pt]{4.1cm}{0.5pt}\hspace{12pt}%
   导师签名：\rule[-3pt]{4.1cm}{0.5pt} \\
   \null\hspace{259pt} 日期：\chinesespace\chinesespace 年\hspace{21pt}月\hspace{21pt}日
